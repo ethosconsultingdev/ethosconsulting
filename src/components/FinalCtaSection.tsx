@@ -1,0 +1,63 @@
+import { Link } from '@tanstack/react-router'
+
+import { finalCta } from '#/content/copy'
+
+export function FinalCtaSection() {
+  return (
+    <section className="bg-white py-16 sm:py-20 lg:py-24">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6">
+        <div className="relative overflow-hidden rounded-3xl">
+          {/* Background photo */}
+          <img
+            src="/final-cta.jpg"
+            alt=""
+            aria-hidden="true"
+            className="absolute inset-0 h-full w-full object-cover"
+          />
+
+          {/* Dark teal gradient overlay */}
+          <div className="absolute inset-0 bg-gradient-to-br from-[#0c2724]/95 via-[#134a42]/85 to-[#0c2724]/90" />
+
+          {/* Diagonal accent shapes */}
+          <img
+            src="/cta-bg-shape1-1.png"
+            alt=""
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0 h-full w-full object-cover mix-blend-overlay"
+          />
+
+          {/* Content */}
+          <div className="relative z-10 flex flex-col items-center px-6 py-20 text-center sm:px-12 sm:py-24">
+            <p className="text-xs font-bold uppercase tracking-widest text-teal-300 sm:text-sm">
+              {finalCta.tagline}
+            </p>
+            <h2 className="mt-3 max-w-2xl text-2xl font-extrabold tracking-tight text-white sm:text-3xl lg:text-4xl">
+              {finalCta.title}
+            </h2>
+
+            <Link
+              to="/contacto"
+              className="mt-8 inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-semibold text-[#0c2724] transition-colors hover:bg-slate-100"
+            >
+              {finalCta.cta}
+              <svg
+                className="h-4 w-4"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={2.5}
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"
+                />
+              </svg>
+            </Link>
+            <p className="mt-4 text-xs text-slate-300">{finalCta.micro}</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}
