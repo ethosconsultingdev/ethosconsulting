@@ -1,15 +1,30 @@
 import { Link } from '@tanstack/react-router'
 
 import { finalCta } from '#/content/copy'
+import type { HomePageContent } from '#/server/wordpress.types'
 
-export function FinalCtaSection() {
+export function FinalCtaSection({
+  content,
+}: {
+  content?: HomePageContent['finalCta']
+}) {
+  const cta =
+    content ||
+    ({
+      tagline: finalCta.tagline,
+      title: finalCta.title,
+      buttonLabel: finalCta.cta,
+      microcopy: finalCta.micro,
+      backgroundImage: '/final-cta.jpg',
+    } satisfies HomePageContent['finalCta'])
+
   return (
     <section className="bg-white py-16 sm:py-20 lg:py-24">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <div className="relative overflow-hidden rounded-3xl">
           {/* Background photo */}
           <img
-            src="/final-cta.jpg"
+            src={cta.backgroundImage}
             alt=""
             aria-hidden="true"
             className="absolute inset-0 h-full w-full object-cover"
@@ -29,17 +44,17 @@ export function FinalCtaSection() {
           {/* Content */}
           <div className="relative z-10 flex flex-col items-center px-6 py-20 text-center sm:px-12 sm:py-24">
             <p className="text-xs font-bold uppercase tracking-widest text-teal-300 sm:text-sm">
-              {finalCta.tagline}
+              {cta.tagline}
             </p>
             <h2 className="mt-3 max-w-2xl text-2xl font-extrabold tracking-tight text-white sm:text-3xl lg:text-4xl">
-              {finalCta.title}
+              {cta.title}
             </h2>
 
             <Link
               to="/contacto"
               className="mt-8 inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-semibold text-[#0c2724] transition-colors hover:bg-slate-100"
             >
-              {finalCta.cta}
+              {cta.buttonLabel}
               <svg
                 className="h-4 w-4"
                 fill="none"
@@ -54,7 +69,7 @@ export function FinalCtaSection() {
                 />
               </svg>
             </Link>
-            <p className="mt-4 text-xs text-slate-300">{finalCta.micro}</p>
+            <p className="mt-4 text-xs text-slate-300">{cta.microcopy}</p>
           </div>
         </div>
       </div>

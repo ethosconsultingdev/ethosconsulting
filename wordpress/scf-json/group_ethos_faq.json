@@ -1,0 +1,29 @@
+{
+  "key": "group_ethos_faq",
+  "title": "Resposta",
+  "fields": [
+    {
+      "key": "field_ethos_faq_answer",
+      "label": "Resposta",
+      "name": "answer",
+      "type": "textarea",
+      "instructions": "Use texto simples e direto. Evite inserir código HTML.",
+      "required": 1,
+      "conditional_logic": 0,
+      "wrapper": { "width": "", "class": "", "id": "" },
+      "maxlength": 1200,
+      "rows": 6,
+      "new_lines": ""
+    }
+  ],
+  "location": [[{ "param": "post_type", "operator": "==", "value": "faq" }]],
+  "menu_order": 0,
+  "position": "normal",
+  "style": "default",
+  "label_placement": "top",
+  "instruction_placement": "label",
+  "hide_on_screen": ["the_content", "comments", "author"],
+  "active": true,
+  "description": "Resposta apresentada na secção de perguntas frequentes.",
+  "show_in_rest": 1
+}

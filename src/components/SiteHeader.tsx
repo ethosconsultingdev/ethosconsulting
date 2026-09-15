@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Link } from '@tanstack/react-router'
 
-import { siteInfo, topBarAnnouncement } from '#/content/copy'
+import { topBarAnnouncement } from '#/content/copy'
 
 export function SiteHeader() {
   const [mobileOpen, setMobileOpen] = useState(false)

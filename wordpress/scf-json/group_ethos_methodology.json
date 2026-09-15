@@ -1,0 +1,122 @@
+{
+  "key": "group_ethos_methodology",
+  "title": "Detalhes da Etapa",
+  "fields": [
+    {
+      "key": "field_ethos_method_subtitle",
+      "label": "Subtítulo",
+      "name": "subtitle",
+      "type": "text",
+      "instructions": "Resumo curto apresentado no separador.",
+      "required": 1,
+      "conditional_logic": 0,
+      "wrapper": { "width": "", "class": "", "id": "" },
+      "maxlength": 140,
+      "default_value": "",
+      "placeholder": "",
+      "prepend": "",
+      "append": ""
+    },
+    {
+      "key": "field_ethos_method_heading",
+      "label": "Título do detalhe",
+      "name": "detail_heading",
+      "type": "text",
+      "instructions": "",
+      "required": 1,
+      "conditional_logic": 0,
+      "wrapper": { "width": "", "class": "", "id": "" },
+      "maxlength": 100,
+      "default_value": "",
+      "placeholder": "",
+      "prepend": "",
+      "append": ""
+    },
+    {
+      "key": "field_ethos_method_description",
+      "label": "Descrição",
+      "name": "detail_description",
+      "type": "textarea",
+      "instructions": "",
+      "required": 1,
+      "conditional_logic": 0,
+      "wrapper": { "width": "", "class": "", "id": "" },
+      "maxlength": 500,
+      "rows": 4,
+      "new_lines": ""
+    },
+    {
+      "key": "field_ethos_method_image_alt",
+      "label": "Descrição da imagem",
+      "name": "image_alt",
+      "type": "text",
+      "instructions": "Descreva a imagem destacada para leitores de ecrã.",
+      "required": 1,
+      "conditional_logic": 0,
+      "wrapper": { "width": "", "class": "", "id": "" },
+      "maxlength": 160,
+      "default_value": "",
+      "placeholder": "",
+      "prepend": "",
+      "append": ""
+    },
+    {
+      "key": "field_ethos_method_points",
+      "label": "Pontos principais",
+      "name": "points",
+      "type": "repeater",
+      "instructions": "Adicione os pontos pela ordem em que devem aparecer.",
+      "required": 1,
+      "conditional_logic": 0,
+      "wrapper": { "width": "", "class": "", "id": "" },
+      "min": 1,
+      "max": 5,
+      "layout": "block",
+      "button_label": "Adicionar ponto",
+      "collapsed": "field_ethos_method_point_label",
+      "rows_per_page": 10,
+      "sub_fields": [
+        {
+          "key": "field_ethos_method_point_label",
+          "label": "Título",
+          "name": "label",
+          "type": "text",
+          "instructions": "",
+          "required": 1,
+          "conditional_logic": 0,
+          "wrapper": { "width": "35", "class": "", "id": "" },
+          "maxlength": 100,
+          "default_value": "",
+          "placeholder": "",
+          "prepend": "",
+          "append": ""
+        },
+        {
+          "key": "field_ethos_method_point_text",
+          "label": "Descrição",
+          "name": "text",
+          "type": "textarea",
+          "instructions": "",
+          "required": 1,
+          "conditional_logic": 0,
+          "wrapper": { "width": "65", "class": "", "id": "" },
+          "maxlength": 300,
+          "rows": 3,
+          "new_lines": ""
+        }
+      ]
+    }
+  ],
+  "location": [
+    [{ "param": "post_type", "operator": "==", "value": "method_step" }]
+  ],
+  "menu_order": 0,
+  "position": "normal",
+  "style": "default",
+  "label_placement": "top",
+  "instruction_placement": "label",
+  "hide_on_screen": ["the_content", "comments", "author"],
+  "active": true,
+  "description": "Campos de uma etapa da metodologia ETHOS.",
+  "show_in_rest": 1
+}

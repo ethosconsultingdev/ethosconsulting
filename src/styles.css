@@ -13,3 +13,52 @@ body,
 body {
   margin: 0;
 }
+
+.wordpress-content {
+  color: #334155;
+  font-size: 1.0625rem;
+  line-height: 1.8;
+}
+
+.wordpress-content > * + * {
+  margin-top: 1.5rem;
+}
+
+.wordpress-content h2,
+.wordpress-content h3 {
+  color: #16282e;
+  font-weight: 800;
+  line-height: 1.25;
+}
+
+.wordpress-content h2 {
+  font-size: 1.875rem;
+}
+
+.wordpress-content h3 {
+  font-size: 1.5rem;
+}
+
+.wordpress-content a {
+  color: #138275;
+  text-decoration: underline;
+}
+
+.wordpress-content ul,
+.wordpress-content ol {
+  padding-left: 1.5rem;
+}
+
+.wordpress-content ul {
+  list-style: disc;
+}
+
+.wordpress-content ol {
+  list-style: decimal;
+}
+
+.wordpress-content img {
+  border-radius: 1rem;
+  height: auto;
+  max-width: 100%;
+}

@@ -5,7 +5,7 @@
 
 // Split as two explicit lines (rather than left to wrap) so the hero
 // headline always renders as exactly 2 lines, at every viewport width.
-export const heroHeadlineLines = [
+export const heroHeadlineLines: [string, string] = [
   'Compras mais transparentes.',
   'Fornecedores mais fiáveis. Menos risco.',
 ]
@@ -46,7 +46,7 @@ export const aboutSection = {
 }
 
 export interface ImpactMetric {
-  id: string
+  id: 'growth' | 'satisfaction' | 'customers'
   value: string
   label: string
 }
@@ -281,6 +281,7 @@ export interface BlogPost {
   author: string
   title: string
   image: string
+  href: string
 }
 
 export const blogPosts: BlogPost[] = [
@@ -289,11 +290,13 @@ export const blogPosts: BlogPost[] = [
     author: 'Equipa Ethos',
     title: 'Como uma auditoria de procurement reduz o risco de fornecedores',
     image: '/blog-procurement-audit.jpg',
+    href: '#',
   },
   {
     date: '26 Mar, 2025',
     author: 'Equipa Ethos',
     title: 'ESG na cadeia de abastecimento: da teoria à prática em Moçambique',
     image: '/blog-esg-supply-chain.jpg',
+    href: '#',
   },
 ]

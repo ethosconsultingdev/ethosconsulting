@@ -1,15 +1,26 @@
 import { useState } from 'react'
 
 import { quickBusinessStepsSection } from '#/content/copy'
+import type { HomePageContent } from '#/server/wordpress.types'
 
-export function MethodologySection() {
-  const [activeStepId, setActiveStepId] = useState(
-    quickBusinessStepsSection.steps[0].id,
-  )
+export function MethodologySection({
+  content,
+}: {
+  content?: HomePageContent['methodology']
+}) {
+  const methodology: HomePageContent['methodology'] = content || {
+    tagline: quickBusinessStepsSection.tagline,
+    title: quickBusinessStepsSection.title,
+    ctaLabel: quickBusinessStepsSection.ctaButton,
+    steps: quickBusinessStepsSection.steps.map((step) => ({
+      ...step,
+      imageAlt: step.detailHeading,
+    })),
+  }
+  const [activeStepId, setActiveStepId] = useState(methodology.steps[0].id)
 
   const activeStep =
-    quickBusinessStepsSection.steps.find((s) => s.id === activeStepId) ??
-    quickBusinessStepsSection.steps[0]
+    methodology.steps.find((s) => s.id === activeStepId) ?? methodology.steps[0]
 
   return (
     <section
@@ -20,16 +31,16 @@ export function MethodologySection() {
         {/* Section Header */}
         <div className="text-center">
           <p className="text-xs font-bold uppercase tracking-wider text-[#138275] sm:text-sm">
-            {quickBusinessStepsSection.tagline}
+            {methodology.tagline}
           </p>
           <h2 className="mx-auto mt-2 max-w-2xl text-2xl font-extrabold tracking-tight text-[#16282e] sm:text-3xl lg:text-4xl">
-            {quickBusinessStepsSection.title}
+            {methodology.title}
           </h2>
         </div>
 
         {/* Clickable Step Tabs */}
         <div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6 sm:mt-12">
-          {quickBusinessStepsSection.steps.map((step) => {
+          {methodology.steps.map((step) => {
             const isActive = step.id === activeStep.id
 
             return (
@@ -79,7 +90,7 @@ export function MethodologySection() {
               <div className="relative h-[260px] w-full overflow-hidden rounded-xl bg-slate-100 sm:h-[300px]">
                 <img
                   src={activeStep.image}
-                  alt={activeStep.detailHeading}
+                  alt={activeStep.imageAlt}
                   className="h-full w-full object-cover object-center"
                 />
                 <div
@@ -119,7 +130,7 @@ export function MethodologySection() {
                   href="#marcar-consulta"
                   className="inline-flex items-center justify-center rounded-md border border-[#138275] bg-[#eef7f6]/60 px-6 py-2.5 text-sm font-semibold text-[#138275] transition-colors hover:bg-[#eef7f6]"
                 >
-                  {quickBusinessStepsSection.ctaButton}
+                  {methodology.ctaLabel}
                 </a>
               </div>
             </div>

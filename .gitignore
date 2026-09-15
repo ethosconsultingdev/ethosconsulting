@@ -3,7 +3,9 @@ node_modules
 dist
 dist-ssr
 *.local
-.env
+.env*
+!.env.example
+.dev.vars
 .nitro
 .tanstack
 .wrangler
@@ -11,7 +13,3 @@ dist-ssr
 .vinxi
 __unconfig*
 todos.json
-
-# local file-backed "leads" store used by the contact form demo —
-# in production this server function would write to a real database instead.
-.data/

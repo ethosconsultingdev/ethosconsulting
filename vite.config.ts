@@ -14,10 +14,10 @@ const config = defineConfig({
     nitro({
       // Deployment target lives entirely in this one option. The route tree,
       // loaders, server functions and SSR modes above are unaffected by it —
-      // swap 'node-server' for 'vercel', 'netlify', 'cloudflare-module', etc.
+      // swap 'cloudflare_module' for 'node-server', 'vercel', 'netlify', etc.
       // (see nitro's preset list) to retarget the runtime without touching
       // any application code.
-      preset: 'node-server',
+      preset: 'cloudflare_module',
       rollupConfig: { external: [/^@sentry\//] },
     }),
     tailwindcss(),

@@ -1,8 +1,20 @@
 import { useState } from 'react'
 
 import { faq, faqTagline, faqTitle } from '#/content/copy'
+import type { HomePageContent } from '#/server/wordpress.types'
 
-export function FaqSection() {
+export function FaqSection({ content }: { content?: HomePageContent['faq'] }) {
+  const faqContent =
+    content ||
+    ({
+      tagline: faqTagline,
+      title: faqTitle,
+      image: {
+        url: '/faq-team.jpg',
+        alt: 'Equipa Ethos Consulting a esclarecer uma dúvida',
+      },
+      items: faq.map((item, index) => ({ id: index, ...item })),
+    } satisfies HomePageContent['faq'])
   const [openIndex, setOpenIndex] = useState(0)
 
   return (
@@ -27,8 +39,8 @@ export function FaqSection() {
           <div className="lg:col-span-5">
             <div className="overflow-hidden rounded-2xl">
               <img
-                src="/faq-team.jpg"
-                alt="Equipa Ethos Consulting a esclarecer uma dúvida"
+                src={faqContent.image.url}
+                alt={faqContent.image.alt}
                 className="h-full max-h-[520px] w-full object-cover object-center"
               />
             </div>
@@ -37,19 +49,19 @@ export function FaqSection() {
           {/* Right Column: Tagline, Title & Accordion */}
           <div className="lg:col-span-7">
             <p className="text-xs font-bold uppercase tracking-wider text-[#138275] sm:text-sm">
-              {faqTagline}
+              {faqContent.tagline}
             </p>
             <h2 className="mt-2 text-2xl font-extrabold tracking-tight text-[#16282e] sm:text-3xl lg:text-4xl">
-              {faqTitle}
+              {faqContent.title}
             </h2>
 
             <div className="mt-8 space-y-3">
-              {faq.map((item, index) => {
+              {faqContent.items.map((item, index) => {
                 const isOpen = index === openIndex
 
                 return (
                   <div
-                    key={item.question}
+                    key={item.id}
                     className={`rounded-xl border bg-white p-5 transition-colors ${
                       isOpen
                         ? 'border-[#138275]/30 shadow-md'

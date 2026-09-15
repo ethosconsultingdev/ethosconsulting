@@ -1,0 +1,46 @@
+{
+  "key": "group_ethos_service",
+  "title": "Detalhes do Serviço",
+  "fields": [
+    {
+      "key": "field_ethos_service_short_description",
+      "label": "Descrição curta",
+      "name": "short_description",
+      "type": "textarea",
+      "instructions": "Resumo curto para listas e formulários.",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": { "width": "", "class": "", "id": "" },
+      "maxlength": 300,
+      "rows": 3,
+      "new_lines": ""
+    },
+    {
+      "key": "field_ethos_service_active",
+      "label": "Disponível para contacto",
+      "name": "active",
+      "type": "true_false",
+      "instructions": "Desative para ocultar este serviço dos formulários sem o apagar.",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": { "width": "", "class": "", "id": "" },
+      "message": "Mostrar este serviço no formulário",
+      "default_value": 1,
+      "ui": 1,
+      "ui_on_text": "Ativo",
+      "ui_off_text": "Oculto"
+    }
+  ],
+  "location": [
+    [{ "param": "post_type", "operator": "==", "value": "service" }]
+  ],
+  "menu_order": 0,
+  "position": "normal",
+  "style": "default",
+  "label_placement": "top",
+  "instruction_placement": "label",
+  "hide_on_screen": ["comments", "author"],
+  "active": true,
+  "description": "Campos de apresentação e disponibilidade dos serviços.",
+  "show_in_rest": 1
+}

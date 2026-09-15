@@ -40,8 +40,7 @@ export function SiteFooter() {
           {/* Copyright bar */}
           <div className="mt-6 flex flex-col gap-3 border-t border-slate-100 pt-5 text-xs text-slate-500 sm:flex-row sm:items-center sm:justify-between">
             <p>
-              Copyright © {siteInfo.name} {year}. Todos os direitos
-              reservados.
+              Copyright © {siteInfo.name} {year}. Todos os direitos reservados.
             </p>
             <nav className="flex items-center gap-5">
               {footerLinks.map((link) => (

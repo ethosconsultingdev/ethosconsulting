@@ -7,13 +7,31 @@ import {
 } from '#/content/copy'
 import { submitInquiry } from '#/server/inquiries.functions'
 import { inquirySchema } from '#/server/inquiries.schema'
+import type { HomePageContent } from '#/server/wordpress.types'
+import { TurnstileField } from '#/components/TurnstileField'
 
-export function Hero() {
+export function Hero({ content }: { content?: HomePageContent['hero'] }) {
+  const hero =
+    content ||
+    ({
+      headlineLines: heroHeadlineLines,
+      subtitle: heroSubtitle,
+      image: {
+        url: '/hero-consultants.jpg',
+        alt: 'Consultores Ethos em reunião de procurement e auditoria',
+      },
+      appointmentTitle: heroAppointmentCard.title,
+      appointmentSubtitle: heroAppointmentCard.subtitle,
+      appointmentButtonLabel: heroAppointmentCard.ctaButton,
+    } satisfies HomePageContent['hero'])
+
   // Form state for the appointment card
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     message: '',
+    website: '',
+    turnstileToken: '',
   })
   const [status, setStatus] = useState<
     'idle' | 'submitting' | 'success' | 'error'
@@ -31,6 +49,8 @@ export function Hero() {
       organisation: '',
       area: 'procurement-estrategico',
       message: formData.message,
+      website: formData.website,
+      turnstileToken: formData.turnstileToken,
     })
 
     if (!parsed.success) {
@@ -49,7 +69,13 @@ export function Hero() {
       setStatus('submitting')
       await submitInquiry({ data: parsed.data })
       setStatus('success')
-      setFormData({ name: '', email: '', message: '' })
+      setFormData({
+        name: '',
+        email: '',
+        message: '',
+        website: '',
+        turnstileToken: '',
+      })
     } catch (err) {
       setStatus('error')
       setErrorMessage(
@@ -66,14 +92,14 @@ export function Hero() {
         {/* Top Header Block: Tagline, Headline, Subtitle */}
         <div className="mx-auto max-w-5xl text-center">
           <h1 className="text-3xl font-bold tracking-tight text-white sm:text-4xl lg:text-5xl lg:leading-tight">
-            {heroHeadlineLines.map((line) => (
+            {hero.headlineLines.map((line) => (
               <span key={line} className="block">
                 {line}
               </span>
             ))}
           </h1>
           <p className="mx-auto mt-4 max-w-3xl text-base text-slate-300 sm:text-lg sm:leading-relaxed">
-            {heroSubtitle}
+            {hero.subtitle}
           </p>
         </div>
 
@@ -83,8 +109,8 @@ export function Hero() {
           <div className="lg:col-span-7">
             <div className="h-full min-h-[340px] overflow-hidden rounded-xl">
               <img
-                src="/hero-consultants.jpg"
-                alt="Consultores Ethos em reunião de procurement e auditoria"
+                src={hero.image.url}
+                alt={hero.image.alt}
                 className="h-full w-full object-cover object-center"
               />
             </div>
@@ -96,10 +122,10 @@ export function Hero() {
               <div>
                 <div className="border-b border-slate-100 pb-3">
                   <h2 className="text-xl font-bold tracking-tight text-[#16282e]">
-                    {heroAppointmentCard.title}
+                    {hero.appointmentTitle}
                   </h2>
                   <p className="mt-1 text-xs text-slate-500">
-                    {heroAppointmentCard.subtitle}
+                    {hero.appointmentSubtitle}
                   </p>
                 </div>
 
@@ -192,6 +218,28 @@ export function Hero() {
                       ) : null}
                     </div>
 
+                    <label
+                      className="absolute -left-[10000px]"
+                      aria-hidden="true"
+                    >
+                      Website
+                      <input
+                        type="text"
+                        tabIndex={-1}
+                        autoComplete="off"
+                        value={formData.website}
+                        onChange={(e) =>
+                          setFormData({ ...formData, website: e.target.value })
+                        }
+                      />
+                    </label>
+
+                    <TurnstileField
+                      onToken={(turnstileToken) =>
+                        setFormData({ ...formData, turnstileToken })
+                      }
+                    />
+
                     <button
                       type="submit"
                       disabled={status === 'submitting'}
@@ -201,7 +249,7 @@ export function Hero() {
                         'A enviar…'
                       ) : (
                         <>
-                          {heroAppointmentCard.ctaButton}
+                          {hero.appointmentButtonLabel}
                           <svg
                             className="h-4 w-4"
                             fill="none"

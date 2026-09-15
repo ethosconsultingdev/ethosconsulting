@@ -3,22 +3,49 @@
 A TanStack Start app (file-based `@tanstack/react-router` + Tailwind CSS v4) for the ETHOS
 CONSULTING landing page. Copy source: `ethos-landing-copy-pt.md`.
 
+## WordPress CMS
+
+The article feed and article pages use the WordPress REST API at
+`https://admin.ethosconsultingmz.co.mz/wp-json/wp/v2`. Published posts are public, so no
+credentials are required for normal production reads.
+
+Copy `.env.example` to `.env` when a different API root or authenticated access is needed:
+
+```bash
+WORDPRESS_API_URL=https://admin.ethosconsultingmz.co.mz/wp-json/wp/v2
+WORDPRESS_API_USERNAME=wordpress-username
+WORDPRESS_API_PASSWORD=xxxx-xxxx-xxxx-xxxx
+RESEND_API_KEY=re_xxxx
+CONTACT_FROM_EMAIL=Website ETHOS <website@example.com>
+CONTACT_TO_EMAIL=contacto@example.com
+VITE_TURNSTILE_SITE_KEY=
+TURNSTILE_SECRET_KEY=
+```
+
+Keep the application password server-side. Never prefix these names with `VITE_`, because
+Vite exposes variables with that prefix to browser code. The homepage falls back to the local
+article cards if WordPress is temporarily unavailable.
+
+WordPress content is read publicly in production. The Application Password is only needed for
+local administration or future draft previews and should not be deployed. Contact submissions
+are delivered through Resend; Turnstile is enabled whenever its site and secret keys are set.
+
 ## Where each requirement lives
 
-| Requirement                      | Where                                                                                                                                                                                            |
-| -------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| File-based routes                | `src/routes/` — `index.tsx` (`/`), `contacto.tsx`, `simulador.tsx`, `__root.tsx` (layout)                                                                                                        |
-| Validated search params          | `src/routes/index.tsx` — `?hero=a\|b\|c\|d` picks a headline variant, `zod` schema with `.default()`/`.catch()` fallback                                                                         |
-| Route loaders                    | `src/routes/index.tsx` `loader()` — kicks off the social-proof fetch                                                                                                                             |
-| Typed server functions           | `src/server/*.functions.ts` — `createServerFn().validator(zodSchema).handler(...)`                                                                                                               |
-| Explicit server-only boundary    | `src/server/*.server.ts` (fs/DB-shaped logic, never imported by client code) vs. `*.functions.ts` (safe RPC wrappers) vs. `*.schema.ts` (client-safe, shared with the form)                      |
-| Full-document SSR                | Default (`ssr: true`) on `/` and `/contacto` — see `src/routes/__root.tsx` for the HTML shell                                                                                                    |
-| Streaming                        | `src/routes/index.tsx` returns an unawaited promise from `loader()`; `src/components/SocialProofSection.tsx` renders it with `<Await>`                                                           |
-| Per-route SSR mode               | `/` and `/contacto` → `ssr: true` (SEO-relevant, fast first paint); `/simulador` → `ssr: false` (personalised, interactive-only quiz, no SEO value) — see comments in `src/routes/simulador.tsx` |
-| Deployment target, app unchanged | `vite.config.ts` → `nitro({ preset: 'node-server' })`. Swap the string for `'vercel'`, `'netlify'`, `'cloudflare-module'`, etc. — nothing else in the app changes.                               |
+| Requirement                   | Where                                                                                                                                                                                            |
+| ----------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| File-based routes             | `src/routes/` — `index.tsx` (`/`), `contacto.tsx`, `simulador.tsx`, `__root.tsx` (layout)                                                                                                        |
+| Validated search params       | `src/routes/index.tsx` — `?hero=a\|b\|c\|d` picks a headline variant, `zod` schema with `.default()`/`.catch()` fallback                                                                         |
+| Route loaders                 | `src/routes/index.tsx` `loader()` — kicks off the social-proof fetch                                                                                                                             |
+| Typed server functions        | `src/server/*.functions.ts` — `createServerFn().validator(zodSchema).handler(...)`                                                                                                               |
+| Explicit server-only boundary | `src/server/*.server.ts` (fs/DB-shaped logic, never imported by client code) vs. `*.functions.ts` (safe RPC wrappers) vs. `*.schema.ts` (client-safe, shared with the form)                      |
+| Full-document SSR             | Default (`ssr: true`) on `/` and `/contacto` — see `src/routes/__root.tsx` for the HTML shell                                                                                                    |
+| Streaming                     | `src/routes/index.tsx` returns an unawaited promise from `loader()`; `src/components/SocialProofSection.tsx` renders it with `<Await>`                                                           |
+| Per-route SSR mode            | `/` and `/contacto` → `ssr: true` (SEO-relevant, fast first paint); `/simulador` → `ssr: false` (personalised, interactive-only quiz, no SEO value) — see comments in `src/routes/simulador.tsx` |
+| Deployment target             | `vite.config.ts` → `nitro({ preset: 'cloudflare_module' })` for Cloudflare Workers.                                                                                                              |
 
-Local file-backed "leads" store for the contact form (`.data/inquiries.jsonl`, git-ignored) stands
-in for a real CRM/database — see the comment in `src/server/inquiries.server.ts`.
+The contact form validates on the client and server, verifies Cloudflare Turnstile when
+configured, and sends notifications through Resend. See `src/server/inquiries.server.ts`.
 
 # Getting Started
 
@@ -59,18 +86,28 @@ pnpm format
 pnpm check
 ```
 
-## Deploy with Nitro
+## Deploy to Cloudflare Workers
 
-This project uses Nitro as a generic server adapter, so it can run on any Node-compatible host.
+Nitro generates the Worker entrypoint, static asset binding, and redirected Wrangler
+configuration during the build.
 
 ```bash
 pnpm build
-node .output/server/index.mjs
+pnpm preview:cloudflare
 ```
 
-The build output is a self-contained Node server. To deploy, push the `.output/` directory to your host (Render, Fly.io, your own VPS, etc.) and run the server command above.
+To verify the Worker bundle without uploading it:
 
-For host-specific presets (Vercel, Netlify, Cloudflare, AWS Lambda, etc.) and tuning, see https://v3.nitro.build/deploy.
+```bash
+pnpm build
+pnpm exec wrangler deploy --dry-run
+```
+
+To deploy after configuring Cloudflare secrets:
+
+```bash
+pnpm deploy
+```
 
 ## Routing
 

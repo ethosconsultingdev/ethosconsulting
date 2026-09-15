@@ -1,6 +1,11 @@
 import { impactMetrics } from '#/content/copy'
+import type { CmsMetric } from '#/server/wordpress.types'
 
-export function StatsBanner() {
+export function StatsBanner({
+  metrics = impactMetrics,
+}: {
+  metrics?: CmsMetric[]
+}) {
   return (
     <section className="bg-white pb-16 sm:pb-20">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
@@ -15,12 +20,15 @@ export function StatsBanner() {
           >
             <polygon points="260,200 520,0 660,0 400,200" fill="#ffffff" />
             <polygon points="520,0 780,200 920,200 660,0" fill="#ffffff" />
-            <polygon points="780,0 1040,200 1200,200 1200,60 940,0" fill="#ffffff" />
+            <polygon
+              points="780,0 1040,200 1200,200 1200,60 940,0"
+              fill="#ffffff"
+            />
           </svg>
 
           {/* 3 Counter items in flat horizontal grid */}
           <div className="relative z-10 grid grid-cols-1 gap-8 sm:grid-cols-3 sm:gap-6 lg:gap-12">
-            {impactMetrics.map((metric) => (
+            {metrics.map((metric) => (
               <div
                 key={metric.id}
                 className="flex items-center gap-4 sm:justify-center"

@@ -1,6 +1,32 @@
 import { aboutSection } from '#/content/copy'
+import type { HomePageContent } from '#/server/wordpress.types'
 
-export function AboutSection() {
+export function AboutSection({
+  content,
+}: {
+  content?: HomePageContent['about']
+}) {
+  const about =
+    content ||
+    ({
+      tagline: aboutSection.tagline,
+      title: aboutSection.title,
+      paragraphs: aboutSection.paragraphs,
+      checkpoints: aboutSection.checkpoints,
+      contactPrompt: aboutSection.contactPrompt,
+      phone: aboutSection.phone,
+      primaryCtaLabel: aboutSection.primaryCtaSub,
+      secondaryCtaLabel: aboutSection.secondaryCta,
+      primaryImage: {
+        url: '/about-team.jpg',
+        alt: 'Equipa Ethos Consulting em consultoria e acompanhamento',
+      },
+      secondaryImage: {
+        url: '/about-team-2.jpg',
+        alt: 'Equipa Ethos Consulting a analisar dados em conjunto',
+      },
+    } satisfies HomePageContent['about'])
+
   return (
     <section
       id="sobre"
@@ -17,15 +43,15 @@ export function AboutSection() {
               />
               <div className="absolute left-0 top-0 h-[62%] w-[68%] overflow-hidden rounded-2xl shadow-xl ring-4 ring-white">
                 <img
-                  src="/about-team.jpg"
-                  alt="Equipa Ethos Consulting em consultoria e acompanhamento"
+                  src={about.primaryImage.url}
+                  alt={about.primaryImage.alt}
                   className="h-full w-full object-cover object-center"
                 />
               </div>
               <div className="absolute bottom-0 right-0 h-[62%] w-[72%] overflow-hidden rounded-2xl shadow-2xl ring-4 ring-white">
                 <img
-                  src="/about-team-2.jpg"
-                  alt="Equipa Ethos Consulting a analisar dados em conjunto"
+                  src={about.secondaryImage.url}
+                  alt={about.secondaryImage.alt}
                   className="h-full w-full object-cover object-center"
                 />
               </div>
@@ -35,21 +61,21 @@ export function AboutSection() {
           {/* Right Column: Copy, Checkpoints, Call Prompt & CTAs */}
           <div className="lg:col-span-7">
             <p className="text-xs font-bold uppercase tracking-wider text-[#138275] sm:text-sm">
-              {aboutSection.tagline}
+              {about.tagline}
             </p>
             <h2 className="mt-2 text-2xl font-extrabold tracking-tight text-[#16282e] sm:text-3xl lg:text-4xl lg:leading-tight">
-              {aboutSection.title}
+              {about.title}
             </h2>
 
             <div className="mt-4 space-y-3 text-sm leading-relaxed text-slate-600 sm:text-base">
-              {aboutSection.paragraphs.map((p) => (
+              {about.paragraphs.map((p) => (
                 <p key={p}>{p}</p>
               ))}
             </div>
 
             {/* Checklist with teal circle checkmarks */}
             <ul className="mt-6 space-y-3">
-              {aboutSection.checkpoints.map((item) => (
+              {about.checkpoints.map((item) => (
                 <li key={item} className="flex items-start gap-3">
                   <svg
                     className="mt-0.5 h-5 w-5 shrink-0 text-[#138275]"
@@ -71,12 +97,12 @@ export function AboutSection() {
 
             {/* Direct Call question line */}
             <div className="mt-6 flex flex-wrap items-center gap-2 text-sm text-slate-700">
-              <span className="font-medium">{aboutSection.contactPrompt}</span>
+              <span className="font-medium">{about.contactPrompt}</span>
               <a
-                href={`tel:${aboutSection.phone.replace(/\s+/g, '')}`}
+                href={`tel:${about.phone.replace(/\s+/g, '')}`}
                 className="font-bold text-[#138275] hover:underline"
               >
-                {aboutSection.phone}
+                {about.phone}
               </a>
             </div>
 
@@ -89,13 +115,13 @@ export function AboutSection() {
                 href="#marcar-consulta"
                 className="inline-flex items-center justify-center rounded-md bg-[#138275] px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-[#0f6f63]"
               >
-                {aboutSection.primaryCtaSub}
+                {about.primaryCtaLabel}
               </a>
               <a
                 href="#metodologia"
                 className="inline-flex items-center justify-center rounded-md border border-[#138275] bg-[#eef7f6]/60 px-6 py-3 text-sm font-semibold text-[#138275] transition-colors hover:bg-[#eef7f6]"
               >
-                {aboutSection.secondaryCta}
+                {about.secondaryCtaLabel}
               </a>
             </div>
           </div>

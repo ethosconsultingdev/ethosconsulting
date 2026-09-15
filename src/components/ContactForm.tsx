@@ -3,13 +3,10 @@ import { useState } from 'react'
 import { services } from '#/content/copy'
 import { inquirySchema } from '#/server/inquiries.schema'
 import { submitInquiry } from '#/server/inquiries.functions'
+import type { CmsService } from '#/server/wordpress.types'
+import { TurnstileField } from '#/components/TurnstileField'
 
 type Status = 'idle' | 'submitting' | 'success' | 'error'
-
-const areaOptions = [
-  ...services.map((s) => ({ id: s.id, name: s.name })),
-  { id: 'outro', name: 'Outro' },
-]
 
 const emptyForm = {
   name: '',
@@ -17,10 +14,25 @@ const emptyForm = {
   organisation: '',
   area: 'procurement-estrategico',
   message: '',
+  website: '',
+  turnstileToken: '',
 }
 
-export function ContactForm() {
-  const [form, setForm] = useState(emptyForm)
+export function ContactForm({
+  cmsServices = [],
+  successHeading = 'Mensagem recebida.',
+  successMessage = 'Obrigado pelo contacto — respondemos normalmente em até 2 dias úteis.',
+}: {
+  cmsServices?: CmsService[]
+  successHeading?: string
+  successMessage?: string
+}) {
+  const areaOptions = [
+    ...(cmsServices.length ? cmsServices : services),
+    { id: 'outro', name: 'Outro' },
+  ]
+  const initialForm = { ...emptyForm, area: areaOptions[0]?.id || 'outro' }
+  const [form, setForm] = useState(initialForm)
   const [status, setStatus] = useState<Status>('idle')
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({})
   const [formError, setFormError] = useState<string | null>(null)
@@ -48,7 +60,7 @@ export function ContactForm() {
       setStatus('submitting')
       await submitInquiry({ data: parsed.data })
       setStatus('success')
-      setForm(emptyForm)
+      setForm(initialForm)
     } catch (error) {
       setStatus('error')
       setFormError(
@@ -62,10 +74,8 @@ export function ContactForm() {
   if (status === 'success') {
     return (
       <div className="rounded-lg border border-emerald-200 bg-emerald-50 p-6 text-emerald-800">
-        <p className="font-semibold">Mensagem recebida.</p>
-        <p className="mt-1 text-sm">
-          Obrigado pelo contacto — respondemos normalmente em até 2 dias úteis.
-        </p>
+        <p className="font-semibold">{successHeading}</p>
+        <p className="mt-1 text-sm">{successMessage}</p>
       </div>
     )
   }
@@ -127,6 +137,21 @@ export function ContactForm() {
           className="w-full rounded-md border border-slate-300 px-3 py-2 text-sm"
         />
       </Field>
+
+      <label className="absolute -left-[10000px]" aria-hidden="true">
+        Website
+        <input
+          type="text"
+          tabIndex={-1}
+          autoComplete="off"
+          value={form.website}
+          onChange={(e) => setForm({ ...form, website: e.target.value })}
+        />
+      </label>
+
+      <TurnstileField
+        onToken={(turnstileToken) => setForm({ ...form, turnstileToken })}
+      />
 
       <button
         type="submit"
