@@ -16,19 +16,22 @@ WORDPRESS_API_URL=https://admin.ethosconsultingmz.co.mz/wp-json/wp/v2
 WORDPRESS_API_USERNAME=wordpress-username
 WORDPRESS_API_PASSWORD=xxxx-xxxx-xxxx-xxxx
 RESEND_API_KEY=re_xxxx
-CONTACT_FROM_EMAIL=Website ETHOS <website@example.com>
+CONTACT_FROM_EMAIL="Website ETHOS <website@example.com>"
 CONTACT_TO_EMAIL=contacto@example.com
-VITE_TURNSTILE_SITE_KEY=
+VITE_TURNSTILE_SITE_KEY=0x4AAAAAAE2UmaE3SrZ7KxhC
 TURNSTILE_SECRET_KEY=
+TURNSTILE_HOSTNAMES=localhost,127.0.0.1
 ```
 
-Keep the application password server-side. Never prefix these names with `VITE_`, because
-Vite exposes variables with that prefix to browser code. The homepage falls back to the local
-article cards if WordPress is temporarily unavailable.
+Keep the application password, Resend key, and Turnstile secret server-side. Never prefix these
+names with `VITE_`, because Vite exposes variables with that prefix to browser code. Set
+`TURNSTILE_HOSTNAMES=ethosconsultingmz.co.mz` on the production Worker; values are exact,
+comma-separated hostnames. The homepage falls back to the local article cards if WordPress is
+temporarily unavailable.
 
 WordPress content is read publicly in production. The Application Password is only needed for
 local administration or future draft previews and should not be deployed. Contact submissions
-are delivered through Resend; Turnstile is enabled whenever its site and secret keys are set.
+are delivered through Resend and require a valid Turnstile token.
 
 ## Where each requirement lives
 

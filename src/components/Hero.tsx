@@ -38,6 +38,7 @@ export function Hero({ content }: { content?: HomePageContent['hero'] }) {
   >('idle')
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({})
   const [errorMessage, setErrorMessage] = useState<string | null>(null)
+  const [turnstileReset, setTurnstileReset] = useState(0)
 
   async function handleAppointmentSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
@@ -69,6 +70,7 @@ export function Hero({ content }: { content?: HomePageContent['hero'] }) {
       setStatus('submitting')
       await submitInquiry({ data: parsed.data })
       setStatus('success')
+      setTurnstileReset((value) => value + 1)
       setFormData({
         name: '',
         email: '',
@@ -78,6 +80,7 @@ export function Hero({ content }: { content?: HomePageContent['hero'] }) {
       })
     } catch (err) {
       setStatus('error')
+      setTurnstileReset((value) => value + 1)
       setErrorMessage(
         err instanceof Error
           ? err.message
@@ -238,6 +241,7 @@ export function Hero({ content }: { content?: HomePageContent['hero'] }) {
                       onToken={(turnstileToken) =>
                         setFormData({ ...formData, turnstileToken })
                       }
+                      resetSignal={turnstileReset}
                     />
 
                     <button

@@ -7,12 +7,15 @@ declare global {
         element: HTMLElement,
         options: {
           sitekey: string
+          action: 'contact'
           callback: (token: string) => void
           'expired-callback': () => void
+          'error-callback': () => void
           theme: 'light'
         },
       ) => string
       remove: (widgetId: string) => void
+      reset: (widgetId: string) => void
     }
   }
 }
@@ -21,22 +24,27 @@ const siteKey = import.meta.env.VITE_TURNSTILE_SITE_KEY
 
 export function TurnstileField({
   onToken,
+  resetSignal = 0,
 }: {
   onToken: (token: string) => void
+  resetSignal?: number
 }) {
   const containerRef = useRef<HTMLDivElement>(null)
+  const widgetIdRef = useRef<string | undefined>(undefined)
   const handleToken = useEffectEvent(onToken)
 
   useEffect(() => {
     if (!siteKey || !containerRef.current) return
 
-    let widgetId: string | undefined
     const renderWidget = () => {
-      if (!window.turnstile || !containerRef.current || widgetId) return
-      widgetId = window.turnstile.render(containerRef.current, {
+      if (!window.turnstile || !containerRef.current || widgetIdRef.current)
+        return
+      widgetIdRef.current = window.turnstile.render(containerRef.current, {
         sitekey: siteKey,
+        action: 'contact',
         callback: handleToken,
         'expired-callback': () => handleToken(''),
+        'error-callback': () => handleToken(''),
         theme: 'light',
       })
     }
@@ -60,9 +68,18 @@ export function TurnstileField({
 
     return () => {
       script.removeEventListener('load', renderWidget)
-      if (widgetId && window.turnstile) window.turnstile.remove(widgetId)
+      if (widgetIdRef.current && window.turnstile) {
+        window.turnstile.remove(widgetIdRef.current)
+        widgetIdRef.current = undefined
+      }
     }
   }, [])
+
+  useEffect(() => {
+    if (!resetSignal || !widgetIdRef.current || !window.turnstile) return
+    window.turnstile.reset(widgetIdRef.current)
+    handleToken('')
+  }, [resetSignal])
 
   if (!siteKey) return null
   return <div ref={containerRef} />

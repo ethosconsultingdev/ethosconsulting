@@ -10,8 +10,11 @@ export interface StoredInquiry {
   message: string
 }
 
-export async function saveInquiry(input: InquiryInput): Promise<StoredInquiry> {
-  await verifyTurnstile(input.turnstileToken)
+export async function saveInquiry(
+  input: InquiryInput,
+  remoteIp?: string,
+): Promise<StoredInquiry> {
+  await verifyTurnstile(input.turnstileToken, remoteIp)
 
   const apiKey = process.env.RESEND_API_KEY
   const from = process.env.CONTACT_FROM_EMAIL
@@ -57,23 +60,45 @@ export async function saveInquiry(input: InquiryInput): Promise<StoredInquiry> {
   return record
 }
 
-async function verifyTurnstile(token: string) {
+async function verifyTurnstile(token: string, remoteIp?: string) {
   const secret = process.env.TURNSTILE_SECRET_KEY
-  if (!secret) return
-
-  if (!token) throw new Error('Confirme que não é um robô.')
-
-  const response = await fetch(
-    'https://challenges.cloudflare.com/turnstile/v0/siteverify',
-    {
-      method: 'POST',
-      body: new URLSearchParams({ secret, response: token }),
-      signal: AbortSignal.timeout(10000),
-    },
+  const expectedHostnames = new Set(
+    (process.env.TURNSTILE_HOSTNAMES || '')
+      .split(',')
+      .map((hostname) => hostname.trim())
+      .filter(Boolean),
   )
-  const result = (await response.json()) as { success?: boolean }
 
-  if (!response.ok || !result.success) {
+  if (!secret || !token || token.length > 2048 || !expectedHostnames.size) {
+    throw new Error('Confirme que não é um robô.')
+  }
+
+  let result: { success?: boolean; action?: string; hostname?: string }
+  try {
+    const body = new URLSearchParams({ secret, response: token })
+    if (remoteIp) body.set('remoteip', remoteIp)
+
+    const response = await fetch(
+      'https://challenges.cloudflare.com/turnstile/v0/siteverify',
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body,
+        signal: AbortSignal.timeout(10000),
+      },
+    )
+    if (!response.ok) throw new Error(`Siteverify failed (${response.status})`)
+    result = (await response.json()) as typeof result
+  } catch {
+    throw new Error('A verificação de segurança falhou. Tente novamente.')
+  }
+
+  if (
+    !result.success ||
+    result.action !== 'contact' ||
+    !result.hostname ||
+    !expectedHostnames.has(result.hostname)
+  ) {
     throw new Error('A verificação de segurança falhou. Tente novamente.')
   }
 }

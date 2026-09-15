@@ -36,6 +36,7 @@ export function ContactForm({
   const [status, setStatus] = useState<Status>('idle')
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({})
   const [formError, setFormError] = useState<string | null>(null)
+  const [turnstileReset, setTurnstileReset] = useState(0)
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
@@ -60,9 +61,11 @@ export function ContactForm({
       setStatus('submitting')
       await submitInquiry({ data: parsed.data })
       setStatus('success')
+      setTurnstileReset((value) => value + 1)
       setForm(initialForm)
     } catch (error) {
       setStatus('error')
+      setTurnstileReset((value) => value + 1)
       setFormError(
         error instanceof Error
           ? error.message
@@ -151,6 +154,7 @@ export function ContactForm({
 
       <TurnstileField
         onToken={(turnstileToken) => setForm({ ...form, turnstileToken })}
+        resetSignal={turnstileReset}
       />
 
       <button

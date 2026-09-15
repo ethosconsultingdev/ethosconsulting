@@ -3,6 +3,7 @@
 // input, even though the form also validates client-side for UX) and
 // delegates the actual write to the server-only module.
 import { createServerFn } from '@tanstack/react-start'
+import { getRequestIP } from '@tanstack/react-start/server'
 
 import { inquirySchema } from './inquiries.schema'
 import { saveInquiry } from './inquiries.server'
@@ -10,6 +11,6 @@ import { saveInquiry } from './inquiries.server'
 export const submitInquiry = createServerFn({ method: 'POST' })
   .validator(inquirySchema)
   .handler(async ({ data }) => {
-    const record = await saveInquiry(data)
+    const record = await saveInquiry(data, getRequestIP())
     return { ok: true as const, id: record.id }
   })
