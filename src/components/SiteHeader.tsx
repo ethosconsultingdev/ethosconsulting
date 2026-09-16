@@ -9,7 +9,7 @@ export function SiteHeader() {
   return (
     <header className="sticky top-0 z-40 bg-white">
       {/* Top dark announcement banner matching reference design */}
-      <div className="bg-[#16282e] px-4 py-2 text-center text-xs font-medium text-slate-200">
+      <div className="bg-[#0a1b29] px-4 py-2 text-center text-xs font-medium text-slate-200">
         <p className="mx-auto max-w-5xl truncate">{topBarAnnouncement}</p>
       </div>
 
@@ -34,22 +34,9 @@ export function SiteHeader() {
           <nav className="hidden items-center gap-6 text-sm font-medium text-slate-700 md:flex">
             <Link
               to="/"
-              className="flex items-center gap-1 text-[#138275] hover:text-[#0f6f63]"
+              className="text-[#157f4d] hover:text-[#10603b]"
             >
               Início
-              <svg
-                className="h-3.5 w-3.5"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={2}
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="m19.5 8.25-7.5 7.5-7.5-7.5"
-                />
-              </svg>
             </Link>
             <a href="/#sobre" className="hover:text-slate-900">
               Sobre Nós
@@ -69,7 +56,7 @@ export function SiteHeader() {
           <div className="flex items-center gap-3">
             <a
               href="#marcar-consulta"
-              className="hidden rounded-md bg-[#138275] px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-[#0f6f63] sm:inline-flex"
+              className="hidden rounded-md bg-[#157f4d] px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-[#10603b] sm:inline-flex"
             >
               Marcar Diagnóstico
             </a>
@@ -112,7 +99,7 @@ export function SiteHeader() {
               <Link
                 to="/"
                 onClick={() => setMobileOpen(false)}
-                className="text-[#138275]"
+                className="text-[#157f4d]"
               >
                 Início
               </Link>
@@ -147,7 +134,7 @@ export function SiteHeader() {
               <a
                 href="#marcar-consulta"
                 onClick={() => setMobileOpen(false)}
-                className="mt-2 inline-block rounded-md bg-[#138275] px-4 py-2 text-center text-sm font-semibold text-white"
+                className="mt-2 inline-block rounded-md bg-[#157f4d] px-4 py-2 text-center text-sm font-semibold text-white"
               >
                 Marcar Diagnóstico
               </a>

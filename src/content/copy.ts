@@ -232,29 +232,27 @@ export const officeLocations: FooterLocation[] = [
         href: 'https://www.google.com/maps/search/?api=1&query=84%20Av.%20Salvador%20Allende%2C%20Maputo%201100%2C%20Mozambique',
       },
       { text: 'Maputo 1100, Moçambique' },
-      {
-        text: 'contacto@ethosconsultingmz.co.mz',
-        href: 'mailto:contacto@ethosconsultingmz.co.mz',
-      },
-      { text: '+258 84 613 8863', href: 'tel:+258846138863' },
     ],
   },
   {
     label: 'Localização 02',
     name: 'Cobertura Nacional',
-    lines: [{ text: 'Atendemos organizações em todo Moçambique.' }],
+    lines: [
+      { text: 'Atendemos organizações em todo Moçambique.' },
+      {
+        text: 'contacto@ethosconsultingmz.co.mz',
+        href: 'mailto:contacto@ethosconsultingmz.co.mz',
+      },
+    ],
   },
   {
     label: 'Localização 03',
     name: 'Região SADC',
-    lines: [{ text: 'Apoio remoto a organizações na região da SADC.' }],
+    lines: [
+      { text: 'Apoio remoto a organizações na região da SADC.' },
+      { text: '+258 84 613 8863', href: 'tel:+258846138863' },
+    ],
   },
-]
-
-export const footerLinks = [
-  { label: 'Metodologia', href: '/#metodologia' },
-  { label: 'FAQ', href: '/#faq' },
-  { label: 'Contacto', href: '/contacto' },
 ]
 
 export const blogSection = {

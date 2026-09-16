@@ -25,7 +25,7 @@ function ArticlePage() {
     <article className="mx-auto max-w-3xl px-6 py-16 sm:py-20">
       <a
         href="/#blog"
-        className="text-sm font-semibold text-[#138275] hover:underline"
+        className="text-sm font-semibold text-[#157f4d] hover:underline"
       >
         Voltar aos artigos
       </a>
@@ -33,7 +33,7 @@ function ArticlePage() {
         <p className="text-sm font-medium text-slate-500">
           {post.date} · Por {post.author}
         </p>
-        <h1 className="mt-3 text-3xl font-extrabold tracking-tight text-[#16282e] sm:text-5xl">
+        <h1 className="mt-3 text-3xl font-extrabold tracking-tight text-[#0a1b29] sm:text-5xl">
           {post.title}
         </h1>
       </header>

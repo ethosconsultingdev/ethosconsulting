@@ -1,5 +1,11 @@
 @import 'tailwindcss';
 
+@theme {
+  --font-sans:
+    'Satoshi', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto,
+    'Helvetica Neue', Arial, sans-serif;
+}
+
 * {
   box-sizing: border-box;
 }
@@ -12,6 +18,28 @@ body,
 
 body {
   margin: 0;
+  font-family: var(--font-sans);
+}
+
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
 }
 
 .wordpress-content {
@@ -26,7 +54,7 @@ body {
 
 .wordpress-content h2,
 .wordpress-content h3 {
-  color: #16282e;
+  color: #0a1b29;
   font-weight: 800;
   line-height: 1.25;
 }
@@ -40,7 +68,7 @@ body {
 }
 
 .wordpress-content a {
-  color: #138275;
+  color: #157f4d;
   text-decoration: underline;
 }
 

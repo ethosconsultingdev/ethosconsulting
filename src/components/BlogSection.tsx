@@ -20,10 +20,10 @@ export function BlogSection({
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         {/* Section Header */}
         <div className="text-center">
-          <p className="text-xs font-bold uppercase tracking-wider text-[#138275] sm:text-sm">
+          <p className="text-xs font-bold uppercase tracking-wider text-[#157f4d] sm:text-sm">
             {content.tagline}
           </p>
-          <h2 className="mx-auto mt-2 max-w-2xl text-2xl font-extrabold tracking-tight text-[#16282e] sm:text-3xl lg:text-4xl">
+          <h2 className="mx-auto mt-2 max-w-2xl text-2xl font-extrabold tracking-tight text-[#0a1b29] sm:text-3xl lg:text-4xl">
             {content.title}
           </h2>
         </div>
@@ -41,30 +41,30 @@ export function BlogSection({
                       className="h-full w-full object-cover object-center transition-transform duration-300 hover:scale-[1.02]"
                     />
                   ) : (
-                    <div className="h-full bg-gradient-to-br from-[#16282e] to-[#138275]" />
+                    <div className="h-full bg-gradient-to-br from-[#0a1b29] to-[#157f4d]" />
                   )}
                 </a>
               </div>
               <div className="relative z-10 -mt-14 ml-6 mr-3 rounded-2xl border border-slate-200/90 bg-white p-6 shadow-sm sm:ml-8 sm:mr-6 sm:p-7">
                 <div className="flex items-center gap-4 text-xs font-medium text-slate-500">
                   <span className="flex items-center gap-1.5">
-                    <CalendarIcon className="h-4 w-4 text-[#138275]" />
+                    <CalendarIcon className="h-4 w-4 text-[#157f4d]" />
                     {post.date}
                   </span>
                   <span className="flex items-center gap-1.5">
-                    <PersonIcon className="h-4 w-4 text-[#138275]" />
+                    <PersonIcon className="h-4 w-4 text-[#157f4d]" />
                     Por {post.author}
                   </span>
                 </div>
-                <h3 className="mt-3 text-base font-bold leading-snug tracking-tight text-[#16282e] sm:text-lg">
-                  <a href={post.href} className="hover:text-[#138275]">
+                <h3 className="mt-3 text-base font-bold leading-snug tracking-tight text-[#0a1b29] sm:text-lg">
+                  <a href={post.href} className="hover:text-[#157f4d]">
                     {post.title}
                   </a>
                 </h3>
                 <div className="mt-5 border-t border-slate-100 pt-4">
                   <a
                     href={post.href}
-                    className="text-xs font-bold uppercase tracking-wider text-[#138275]"
+                    className="text-xs font-bold uppercase tracking-wider text-[#157f4d]"
                   >
                     Ler mais »
                   </a>

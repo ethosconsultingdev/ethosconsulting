@@ -30,10 +30,10 @@ export function MethodologySection({
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         {/* Section Header */}
         <div className="text-center">
-          <p className="text-xs font-bold uppercase tracking-wider text-[#138275] sm:text-sm">
+          <p className="text-xs font-bold uppercase tracking-wider text-[#157f4d] sm:text-sm">
             {methodology.tagline}
           </p>
-          <h2 className="mx-auto mt-2 max-w-2xl text-2xl font-extrabold tracking-tight text-[#16282e] sm:text-3xl lg:text-4xl">
+          <h2 className="mx-auto mt-2 max-w-2xl text-2xl font-extrabold tracking-tight text-[#0a1b29] sm:text-3xl lg:text-4xl">
             {methodology.title}
           </h2>
         </div>
@@ -50,13 +50,13 @@ export function MethodologySection({
                 onClick={() => setActiveStepId(step.id)}
                 className={`flex items-start gap-4 rounded-xl p-5 text-left transition-all sm:p-6 cursor-pointer ${
                   isActive
-                    ? 'border border-[#138275] bg-[#138275] text-white'
+                    ? 'border border-[#157f4d] bg-[#157f4d] text-white'
                     : 'border border-slate-200/90 bg-white text-slate-800 hover:border-slate-300'
                 }`}
               >
                 <div
                   className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-lg ${
-                    isActive ? 'text-white' : 'text-[#138275]'
+                    isActive ? 'text-white' : 'text-[#157f4d]'
                   }`}
                 >
                   <StepDiamondIcon />
@@ -71,7 +71,7 @@ export function MethodologySection({
                   </h3>
                   <p
                     className={`mt-1 text-xs leading-relaxed ${
-                      isActive ? 'text-teal-100' : 'text-slate-500'
+                      isActive ? 'text-[#e3f7ee]' : 'text-slate-500'
                     }`}
                   >
                     {step.subtitle}
@@ -95,14 +95,14 @@ export function MethodologySection({
                 />
                 <div
                   aria-hidden="true"
-                  className="absolute inset-y-0 left-0 w-1.5 bg-[#16282e]"
+                  className="absolute inset-y-0 left-0 w-1.5 bg-[#0a1b29]"
                 />
               </div>
             </div>
 
             {/* Right Details */}
             <div className="flex flex-col justify-center lg:col-span-7">
-              <h3 className="text-2xl font-extrabold tracking-tight text-[#16282e] sm:text-3xl">
+              <h3 className="text-2xl font-extrabold tracking-tight text-[#0a1b29] sm:text-3xl">
                 {activeStep.detailHeading}
               </h3>
               <p className="mt-3 text-sm leading-relaxed text-slate-600 sm:text-base">
@@ -116,7 +116,7 @@ export function MethodologySection({
                     key={pt.label}
                     className="text-xs leading-relaxed sm:text-sm text-slate-700"
                   >
-                    <strong className="font-bold text-[#16282e]">
+                    <strong className="font-bold text-[#0a1b29]">
                       {pt.label}{' '}
                     </strong>
                     <span>{pt.text}</span>
@@ -128,7 +128,7 @@ export function MethodologySection({
               <div className="mt-6">
                 <a
                   href="#marcar-consulta"
-                  className="inline-flex items-center justify-center rounded-md border border-[#138275] bg-[#eef7f6]/60 px-6 py-2.5 text-sm font-semibold text-[#138275] transition-colors hover:bg-[#eef7f6]"
+                  className="inline-flex items-center justify-center rounded-md border border-[#157f4d] bg-[#f3fcf8]/60 px-6 py-2.5 text-sm font-semibold text-[#157f4d] transition-colors hover:bg-[#f3fcf8]"
                 >
                   {methodology.ctaLabel}
                 </a>

@@ -30,8 +30,8 @@ export function FinalCtaSection({
             className="absolute inset-0 h-full w-full object-cover"
           />
 
-          {/* Dark teal gradient overlay */}
-          <div className="absolute inset-0 bg-gradient-to-br from-[#0c2724]/95 via-[#134a42]/85 to-[#0c2724]/90" />
+          {/* Dark navy gradient overlay */}
+          <div className="absolute inset-0 bg-gradient-to-br from-[#0a1b29]/95 via-[#112e45]/85 to-[#0a1b29]/90" />
 
           {/* Diagonal accent shapes */}
           <img
@@ -43,7 +43,7 @@ export function FinalCtaSection({
 
           {/* Content */}
           <div className="relative z-10 flex flex-col items-center px-6 py-20 text-center sm:px-12 sm:py-24">
-            <p className="text-xs font-bold uppercase tracking-widest text-teal-300 sm:text-sm">
+            <p className="text-xs font-bold uppercase tracking-widest text-[#8decc0] sm:text-sm">
               {cta.tagline}
             </p>
             <h2 className="mt-3 max-w-2xl text-2xl font-extrabold tracking-tight text-white sm:text-3xl lg:text-4xl">
@@ -52,7 +52,7 @@ export function FinalCtaSection({
 
             <Link
               to="/contacto"
-              className="mt-8 inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-semibold text-[#0c2724] transition-colors hover:bg-slate-100"
+              className="mt-8 inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-semibold text-[#0a1b29] transition-colors hover:bg-slate-100"
             >
               {cta.buttonLabel}
               <svg

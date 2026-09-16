@@ -90,7 +90,7 @@ export function Hero({ content }: { content?: HomePageContent['hero'] }) {
   }
 
   return (
-    <section className="bg-[#16282e] text-white">
+    <section className="bg-[#0a1b29] text-white">
       <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6 sm:py-16 lg:py-20">
         {/* Top Header Block: Tagline, Headline, Subtitle */}
         <div className="mx-auto max-w-5xl text-center">
@@ -124,7 +124,7 @@ export function Hero({ content }: { content?: HomePageContent['hero'] }) {
             <div className="flex h-full flex-col justify-between rounded-xl bg-white p-6 text-slate-900 sm:p-7">
               <div>
                 <div className="border-b border-slate-100 pb-3">
-                  <h2 className="text-xl font-bold tracking-tight text-[#16282e]">
+                  <h2 className="text-xl font-bold tracking-tight text-[#0a1b29]">
                     {hero.appointmentTitle}
                   </h2>
                   <p className="mt-1 text-xs text-slate-500">
@@ -133,18 +133,18 @@ export function Hero({ content }: { content?: HomePageContent['hero'] }) {
                 </div>
 
                 {status === 'success' ? (
-                  <div className="my-6 rounded-lg border border-teal-200 bg-teal-50 p-5 text-teal-900">
+                  <div className="my-6 rounded-lg border border-[#c4eeda] bg-[#f3fcf8] p-5 text-[#16412d]">
                     <p className="font-bold">
                       ✓ Mensagem recebida com sucesso!
                     </p>
-                    <p className="mt-1 text-xs leading-relaxed text-teal-800">
+                    <p className="mt-1 text-xs leading-relaxed text-[#10603b]">
                       Obrigado pelo contacto. A nossa equipa de consultoria
                       entrará em contacto em até 2 dias úteis.
                     </p>
                     <button
                       type="button"
                       onClick={() => setStatus('idle')}
-                      className="mt-4 text-xs font-semibold text-teal-800 underline hover:text-teal-950"
+                      className="mt-4 text-xs font-semibold text-[#10603b] underline hover:text-[#0d261a]"
                     >
                       Enviar outro agendamento
                     </button>
@@ -172,7 +172,7 @@ export function Hero({ content }: { content?: HomePageContent['hero'] }) {
                           setFormData({ ...formData, name: e.target.value })
                         }
                         placeholder={heroAppointmentCard.namePlaceholder}
-                        className="mt-1 w-full rounded-md border border-slate-200/80 bg-slate-50 px-3.5 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 focus:border-teal-600 focus:bg-white focus:outline-none focus:ring-1 focus:ring-teal-600"
+                        className="mt-1 w-full rounded-md border border-slate-200/80 bg-slate-50 px-3.5 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 focus:border-[#1aa263] focus:bg-white focus:outline-none focus:ring-1 focus:ring-[#1aa263]"
                       />
                       {fieldErrors.name ? (
                         <p className="mt-1 text-xs text-red-600">
@@ -192,7 +192,7 @@ export function Hero({ content }: { content?: HomePageContent['hero'] }) {
                           setFormData({ ...formData, email: e.target.value })
                         }
                         placeholder={heroAppointmentCard.emailPlaceholder}
-                        className="mt-1 w-full rounded-md border border-slate-200/80 bg-slate-50 px-3.5 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 focus:border-teal-600 focus:bg-white focus:outline-none focus:ring-1 focus:ring-teal-600"
+                        className="mt-1 w-full rounded-md border border-slate-200/80 bg-slate-50 px-3.5 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 focus:border-[#1aa263] focus:bg-white focus:outline-none focus:ring-1 focus:ring-[#1aa263]"
                       />
                       {fieldErrors.email ? (
                         <p className="mt-1 text-xs text-red-600">
@@ -212,7 +212,7 @@ export function Hero({ content }: { content?: HomePageContent['hero'] }) {
                           setFormData({ ...formData, message: e.target.value })
                         }
                         placeholder={heroAppointmentCard.messagePlaceholder}
-                        className="mt-1 w-full resize-none rounded-md border border-slate-200/80 bg-slate-50 px-3.5 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 focus:border-teal-600 focus:bg-white focus:outline-none focus:ring-1 focus:ring-teal-600"
+                        className="mt-1 w-full resize-none rounded-md border border-slate-200/80 bg-slate-50 px-3.5 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 focus:border-[#1aa263] focus:bg-white focus:outline-none focus:ring-1 focus:ring-[#1aa263]"
                       />
                       {fieldErrors.message ? (
                         <p className="mt-1 text-xs text-red-600">
@@ -247,7 +247,7 @@ export function Hero({ content }: { content?: HomePageContent['hero'] }) {
                     <button
                       type="submit"
                       disabled={status === 'submitting'}
-                      className="mt-2 flex w-full items-center justify-center gap-2 rounded-md bg-[#138275] py-3 text-sm font-semibold text-white transition-colors hover:bg-[#0f6f63] disabled:opacity-50"
+                      className="mt-2 flex w-full items-center justify-center gap-2 rounded-md bg-[#157f4d] py-3 text-sm font-semibold text-white transition-colors hover:bg-[#10603b] disabled:opacity-50"
                     >
                       {status === 'submitting' ? (
                         'A enviar…'
@@ -282,7 +282,7 @@ export function Hero({ content }: { content?: HomePageContent['hero'] }) {
       <button
         type="button"
         onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-        className="fixed bottom-6 right-6 z-30 flex h-11 w-11 items-center justify-center rounded-full bg-[#138275] text-white transition-all hover:scale-110 hover:bg-[#0f6f63]"
+        className="fixed bottom-6 right-6 z-30 flex h-11 w-11 items-center justify-center rounded-full bg-[#157f4d] text-white transition-all hover:scale-110 hover:bg-[#10603b]"
         aria-label="Voltar ao topo"
       >
         <svg

@@ -31,15 +31,17 @@ Make the ETHOS CONSULTING frontend easy for non-developers to manage through Wor
 
 ## Delivery Status
 
-Phases 1-4 and 6-10 are implemented for published production content. The remaining post-launch work is intentionally bounded:
+Phases 1-4 and 6-10 are complete for published production content. Phase 5 is complete except for authenticated draft preview. Production WordPress reads use short edge-cache TTLs, and contact submissions are limited to five attempts per IP per minute before Turnstile and Resend run.
 
-- Add rate limiting for contact submissions in addition to Turnstile.
-- Add conservative caching for public WordPress reads.
-- Add authenticated draft preview with a dedicated least-privilege WordPress user.
-- Publish the first approved article; the website does not display placeholder articles.
-- Reintroduce an impact section only after ETHOS supplies verified, attributable figures.
+## Post-Launch Roadmap
 
-## Phase 1: WordPress Foundation
+1. Add authenticated draft preview with a dedicated least-privilege WordPress user.
+2. Complete the launch verification matrix for mobile layouts, fallback behavior, media alt text, and simulated WordPress outages.
+3. Document and test WordPress database, uploads, CPT UI, and SCF backup and recovery procedures.
+4. Publish the first approved article; the website must not display placeholder articles.
+5. Reintroduce an impact section only after ETHOS supplies verified, attributable figures.
+
+## Phase 1: WordPress Foundation (Complete)
 
 1. Back up the WordPress database and files.
 2. Correct the WordPress Site URL so both the site and home URLs use HTTPS.
@@ -52,7 +54,7 @@ Phases 1-4 and 6-10 are implemented for published production content. The remain
 
 SCF can also register post types, but that feature must not be used here because CPT UI owns that responsibility. Duplicate registration would make the schema difficult to maintain.
 
-## Phase 2: Content Types
+## Phase 2: Content Types (Complete)
 
 ### Service
 
@@ -126,7 +128,7 @@ Articles continue using the standard WordPress `post` type with:
 - Publication date
 - Categories
 
-## Phase 3: Homepage Fields
+## Phase 3: Homepage Fields (Complete)
 
 Create a normal WordPress page with the slug `inicio`. Attach an SCF field group named `Homepage` and organize it into tabs.
 
@@ -180,7 +182,7 @@ The two headline fields remain separate because the design deliberately renders 
 - `final_cta_microcopy`: text
 - `final_cta_background`: image object
 
-## Phase 4: Contact Page Fields
+## Phase 4: Contact Page Fields (Complete)
 
 Create a WordPress page with the slug `contacto`. Attach an SCF field group named `Contact Page`.
 
@@ -193,7 +195,7 @@ Create a WordPress page with the slug `contacto`. Attach an SCF field group name
 
 Operational validation rules remain in application code. Editors will not control field limits, trusted destination addresses, API keys, or server behavior.
 
-## Phase 5: Editor Experience
+## Phase 5: Editor Experience (Preview Pending)
 
 The WordPress interface must use Portuguese labels and clear instructions.
 
@@ -207,11 +209,11 @@ The WordPress interface must use Portuguese labels and clear instructions.
 - Required fields have validation and concise guidance.
 - Image fields include recommended dimensions and required alt-text instructions.
 - Fixed section layouts prevent accidental design breakage.
-- Draft preview is available before publication.
+- Published-content editing is available; authenticated draft preview remains post-launch work.
 
 Copy, images, articles, FAQs, services, and methodology steps will be editable without code. Structural design changes, new field types, and application logic will remain developer tasks.
 
-## Phase 6: REST API Contract
+## Phase 6: REST API Contract (Complete)
 
 Expected public endpoints:
 
@@ -228,7 +230,7 @@ SCF field groups must enable `Show in REST API`. The exact SCF response shape mu
 
 Public published content requests must not include WordPress administrator credentials. Application Password credentials stay local during setup and can later be replaced by a dedicated least-privilege integration account if authenticated previews are required.
 
-## Phase 7: Content Migration
+## Phase 7: Content Migration (Complete)
 
 1. Upload the existing frontend images to the WordPress Media Library.
 2. Add meaningful alt text to all content images.
@@ -241,7 +243,7 @@ Public published content requests must not include WordPress administrator crede
 9. Verify every REST response before switching the frontend to CMS data.
 10. Keep `src/content/copy.ts` as a safe fallback until production content is complete.
 
-## Phase 8: Frontend Integration
+## Phase 8: Frontend Integration (Complete)
 
 1. Add typed SCF schemas to the WordPress client.
 2. Add fetchers for Homepage, Contact Page, Services, Methodology, FAQs, and Posts.
@@ -252,7 +254,7 @@ Public published content requests must not include WordPress administrator crede
 7. Preserve the existing section anchors and frontend routes.
 8. Use responsive WordPress media sizes where available.
 9. Preserve image alt text and safe article HTML handling.
-10. Add draft-preview support after the published-content flow is stable.
+10. Keep draft-preview support isolated from the public published-content flow.
 
 Fixed layout constraints:
 
@@ -262,7 +264,7 @@ Fixed layout constraints:
 - Stable anchors: `sobre`, `metodologia`, `faq`, `blog`, and `marcar-consulta`
 - Stable routes: `/`, `/contacto`, `/simulador`, and `/artigos/$slug`
 
-## Phase 9: Contact Delivery with Resend
+## Phase 9: Contact Delivery with Resend (Complete)
 
 Replace the local filesystem inquiry store with a server-side Resend integration.
 
@@ -295,7 +297,7 @@ Inputs required for this phase:
 - Resend API key
 - Cloudflare Turnstile site and secret keys
 
-## Phase 10: Cloudflare Workers Deployment
+## Phase 10: Cloudflare Workers Deployment (Complete)
 
 1. Change the Nitro deployment preset from `node-server` to `cloudflare_module`.
 2. Add Wrangler as a development dependency.
@@ -304,7 +306,7 @@ Inputs required for this phase:
 5. Store Resend and Turnstile secrets in Cloudflare.
 6. Keep WordPress administrator credentials out of Cloudflare.
 7. Deploy a preview Worker and test all SSR routes and server functions.
-8. Configure conservative caching for public WordPress reads.
+8. Cache successful public WordPress reads at the edge for 60 seconds, cache 404 responses for 10 seconds, and do not cache server errors.
 9. Connect `ethosconsultingmz.co.mz` to the Worker.
 10. Keep `admin.ethosconsultingmz.co.mz` as the WordPress administration and API origin.
 
@@ -317,7 +319,7 @@ Inputs required for this phase:
 - Validate all WordPress responses with Zod before rendering.
 - Retain safe local fallback content during WordPress outages.
 - Restrict rich-text fields to locations that intentionally render WordPress HTML.
-- Add spam protection and rate limiting before enabling the production form.
+- Apply Turnstile and a five-attempt-per-minute, per-IP Worker rate limit before sending contact email.
 - Export CPT UI and SCF configuration after every schema change.
 
 ## Verification Checklist
@@ -339,18 +341,3 @@ Inputs required for this phase:
 - `pnpm lint` passes.
 - `pnpm exec tsc --noEmit` passes.
 - `pnpm build` passes.
-
-## Implementation Order
-
-1. Back up and configure WordPress HTTPS.
-2. Install CPT UI and SCF.
-3. Define and export CPTs and SCF field groups.
-4. Seed WordPress with the existing content and media.
-5. Verify the REST contract.
-6. Integrate Homepage and Contact Page data in the frontend.
-7. Integrate Services, Methodology, and FAQs.
-8. Add preview and fallback behavior.
-9. Replace contact storage with Resend and Turnstile.
-10. Convert Nitro to Cloudflare Workers.
-11. Run full verification and deploy a preview.
-12. Approve production content and switch DNS.

@@ -20,6 +20,14 @@ interface EmailPayload {
   tags: Array<{ name: string; value: string }>
 }
 
+interface RateLimiter {
+  limit: (options: { key: string }) => Promise<{ success: boolean }>
+}
+
+declare global {
+  var __env__: { CONTACT_RATE_LIMITER?: RateLimiter } | undefined
+}
+
 const AREA_LABELS: Record<string, string> = {
   'procurement-estrategico': 'Procurement Estratégico',
   'auditoria-procurement': 'Auditoria de Procurement',
@@ -34,6 +42,7 @@ export async function saveInquiry(
   input: InquiryInput,
   remoteIp?: string,
 ): Promise<StoredInquiry> {
+  await enforceContactRateLimit(remoteIp)
   await verifyTurnstile(input.turnstileToken, remoteIp)
 
   const apiKey = process.env.RESEND_API_KEY
@@ -106,6 +115,31 @@ export async function saveInquiry(
   }
 
   return record
+}
+
+async function enforceContactRateLimit(remoteIp?: string) {
+  const limiter = globalThis.__env__?.CONTACT_RATE_LIMITER
+
+  if (!limiter) {
+    if (process.env.NODE_ENV === 'production') {
+      throw new Error(
+        'O formulário ainda não está configurado. Tente novamente mais tarde.',
+      )
+    }
+    return
+  }
+
+  if (!remoteIp) {
+    throw new Error('Não foi possível enviar. Tente novamente mais tarde.')
+  }
+
+  const { success } = await limiter.limit({ key: `contact:${remoteIp}` })
+  if (!success) {
+    console.warn(JSON.stringify({ event: 'contact_rate_limited' }))
+    throw new Error(
+      'Foram feitas demasiadas tentativas. Aguarde um minuto e tente novamente.',
+    )
+  }
 }
 
 async function sendEmail(
@@ -251,7 +285,7 @@ function buildConfirmationHtml(inquiry: StoredInquiry) {
     heading: `Obrigado, ${firstName(inquiry.name)}.`,
     introduction:
       'Recebemos a sua mensagem e a nossa equipa irá analisá-la. Respondemos normalmente no prazo de até 2 dias úteis.',
-    content: `<h2 style="margin:32px 0 12px;color:#16282e;font-family:Arial,sans-serif;font-size:18px;line-height:1.4;">Resumo do seu pedido</h2>
+    content: `<h2 style="margin:32px 0 12px;color:#0a1b29;font-family:Arial,sans-serif;font-size:18px;line-height:1.4;">Resumo do seu pedido</h2>
       ${buildDetailsTable([
         ['Organização', inquiry.organisation || 'Não indicada'],
         ['Área de interesse', formatArea(inquiry.area)],
@@ -295,15 +329,15 @@ function buildEmailLayout({
       <td align="center" style="padding:32px 12px;">
         <table role="presentation" width="600" cellspacing="0" cellpadding="0" border="0" style="width:100%;max-width:600px;background:#ffffff;border-radius:14px;overflow:hidden;box-shadow:0 8px 30px rgba(22,40,46,0.08);">
           <tr>
-            <td style="padding:26px 32px;background:#16282e;">
+            <td style="padding:26px 32px;background:#0a1b29;">
               <span style="color:#ffffff;font-family:Arial,sans-serif;font-size:24px;font-weight:800;letter-spacing:-0.5px;">ETHOS</span>
-              <span style="margin-left:8px;color:#45b6a8;font-family:Arial,sans-serif;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;">Consulting</span>
+              <span style="margin-left:8px;color:#8decc0;font-family:Arial,sans-serif;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;">Consulting</span>
             </td>
           </tr>
           <tr>
             <td style="padding:36px 32px 32px;">
-              <p style="margin:0 0 10px;color:#138275;font-family:Arial,sans-serif;font-size:12px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;">${escapeHtml(eyebrow)}</p>
-              <h1 style="margin:0;color:#16282e;font-family:Arial,sans-serif;font-size:28px;line-height:1.25;letter-spacing:-0.5px;">${escapeHtml(heading)}</h1>
+              <p style="margin:0 0 10px;color:#157f4d;font-family:Arial,sans-serif;font-size:12px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;">${escapeHtml(eyebrow)}</p>
+              <h1 style="margin:0;color:#0a1b29;font-family:Arial,sans-serif;font-size:28px;line-height:1.25;letter-spacing:-0.5px;">${escapeHtml(heading)}</h1>
               <p style="margin:16px 0 28px;color:#475569;font-family:Arial,sans-serif;font-size:16px;line-height:1.7;">${escapeHtml(introduction)}</p>
               ${content}
             </td>
@@ -336,10 +370,10 @@ function buildDetailsTable(rows: Array<[string, string]>) {
 }
 
 function buildMessageBlock(label: string, message: string) {
-  return `<table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="width:100%;margin-top:24px;background:#f8fafc;border-left:4px solid #138275;border-radius:0 8px 8px 0;">
+  return `<table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="width:100%;margin-top:24px;background:#f8fafc;border-left:4px solid #157f4d;border-radius:0 8px 8px 0;">
     <tr>
       <td style="padding:20px;">
-        <p style="margin:0 0 8px;color:#16282e;font-family:Arial,sans-serif;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;">${escapeHtml(label)}</p>
+        <p style="margin:0 0 8px;color:#0a1b29;font-family:Arial,sans-serif;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;">${escapeHtml(label)}</p>
         <p style="margin:0;color:#334155;font-family:Arial,sans-serif;font-size:15px;line-height:1.7;">${escapeHtml(message).replace(/\n/g, '<br>')}</p>
       </td>
     </tr>
@@ -349,7 +383,7 @@ function buildMessageBlock(label: string, message: string) {
 function buildButton(href: string, label: string) {
   return `<table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin-top:28px;">
     <tr>
-      <td style="border-radius:7px;background:#138275;">
+      <td style="border-radius:7px;background:#157f4d;">
         <a href="${escapeHtml(href)}" style="display:inline-block;padding:13px 21px;color:#ffffff;font-family:Arial,sans-serif;font-size:14px;font-weight:700;text-decoration:none;">${escapeHtml(label)}</a>
       </td>
     </tr>

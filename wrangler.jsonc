@@ -15,6 +15,16 @@
     "CONTACT_FROM_EMAIL": "Ethos Consulting <website@email.ethosconsultingmz.co.mz>",
     "CONTACT_TO_EMAIL": "contacto@ethosconsultingmz.co.mz",
   },
+  "ratelimits": [
+    {
+      "name": "CONTACT_RATE_LIMITER",
+      "namespace_id": "2026091601",
+      "simple": {
+        "limit": 5,
+        "period": 60,
+      },
+    },
+  ],
   "observability": {
     "enabled": true,
     "logs": {

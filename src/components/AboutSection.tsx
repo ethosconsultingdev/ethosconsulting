@@ -39,7 +39,7 @@ export function AboutSection({
             <div className="relative h-[420px] w-full max-w-md sm:h-[460px]">
               <div
                 aria-hidden="true"
-                className="absolute -right-3 top-4 h-32 w-32 rotate-6 rounded-3xl bg-teal-100/70"
+                className="absolute -right-3 top-4 h-32 w-32 rotate-6 rounded-3xl bg-[#c4eeda]/70"
               />
               <div className="absolute left-0 top-0 h-[62%] w-[68%] overflow-hidden rounded-2xl shadow-xl ring-4 ring-white">
                 <img
@@ -60,10 +60,10 @@ export function AboutSection({
 
           {/* Right Column: Copy, Checkpoints, Call Prompt & CTAs */}
           <div className="lg:col-span-7">
-            <p className="text-xs font-bold uppercase tracking-wider text-[#138275] sm:text-sm">
+            <p className="text-xs font-bold uppercase tracking-wider text-[#157f4d] sm:text-sm">
               {about.tagline}
             </p>
-            <h2 className="mt-2 text-2xl font-extrabold tracking-tight text-[#16282e] sm:text-3xl lg:text-4xl lg:leading-tight">
+            <h2 className="mt-2 text-2xl font-extrabold tracking-tight text-[#0a1b29] sm:text-3xl lg:text-4xl lg:leading-tight">
               {about.title}
             </h2>
 
@@ -73,12 +73,12 @@ export function AboutSection({
               ))}
             </div>
 
-            {/* Checklist with teal circle checkmarks */}
+            {/* Checklist with green circle checkmarks */}
             <ul className="mt-6 space-y-3">
               {about.checkpoints.map((item) => (
                 <li key={item} className="flex items-start gap-3">
                   <svg
-                    className="mt-0.5 h-5 w-5 shrink-0 text-[#138275]"
+                    className="mt-0.5 h-5 w-5 shrink-0 text-[#157f4d]"
                     viewBox="0 0 24 24"
                     fill="currentColor"
                   >
@@ -100,7 +100,7 @@ export function AboutSection({
               <span className="font-medium">{about.contactPrompt}</span>
               <a
                 href={`tel:${about.phone.replace(/\s+/g, '')}`}
-                className="font-bold text-[#138275] hover:underline"
+                className="font-bold text-[#157f4d] hover:underline"
               >
                 {about.phone}
               </a>
@@ -113,13 +113,13 @@ export function AboutSection({
             <div className="flex flex-wrap items-center gap-4">
               <a
                 href="#marcar-consulta"
-                className="inline-flex items-center justify-center rounded-md bg-[#138275] px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-[#0f6f63]"
+                className="inline-flex items-center justify-center rounded-md bg-[#157f4d] px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-[#10603b]"
               >
                 {about.primaryCtaLabel}
               </a>
               <a
                 href="#metodologia"
-                className="inline-flex items-center justify-center rounded-md border border-[#138275] bg-[#eef7f6]/60 px-6 py-3 text-sm font-semibold text-[#138275] transition-colors hover:bg-[#eef7f6]"
+                className="inline-flex items-center justify-center rounded-md border border-[#157f4d] bg-[#f3fcf8]/60 px-6 py-3 text-sm font-semibold text-[#157f4d] transition-colors hover:bg-[#f3fcf8]"
               >
                 {about.secondaryCtaLabel}
               </a>

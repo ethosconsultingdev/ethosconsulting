@@ -10,6 +10,18 @@ import type {
 } from './wordpress.types'
 
 const DEFAULT_API_URL = 'https://admin.ethosconsultingmz.co.mz/wp-json/wp/v2'
+const PUBLIC_CACHE_OPTIONS = {
+  cacheEverything: true,
+  cacheTtlByStatus: {
+    '200-299': 60,
+    404: 10,
+    '500-599': 0,
+  },
+}
+
+interface CloudflareRequestInit extends RequestInit {
+  cf?: typeof PUBLIC_CACHE_OPTIONS
+}
 
 const renderedSchema = z.object({ rendered: z.string() })
 
@@ -152,10 +164,12 @@ function getHeaders(authenticated = false) {
 }
 
 async function requestPosts(path: string, searchParams: URLSearchParams) {
-  const response = await fetch(getApiUrl(path, searchParams), {
+  const options: CloudflareRequestInit = {
     headers: getHeaders(),
     signal: AbortSignal.timeout(5000),
-  })
+    cf: PUBLIC_CACHE_OPTIONS,
+  }
+  const response = await fetch(getApiUrl(path, searchParams), options)
 
   if (!response.ok) {
     throw new Error(`WordPress request failed with status ${response.status}.`)
@@ -165,10 +179,12 @@ async function requestPosts(path: string, searchParams: URLSearchParams) {
 }
 
 async function requestCollection(path: string, searchParams: URLSearchParams) {
-  const response = await fetch(getApiUrl(path, searchParams), {
+  const options: CloudflareRequestInit = {
     headers: getHeaders(),
     signal: AbortSignal.timeout(5000),
-  })
+    cf: PUBLIC_CACHE_OPTIONS,
+  }
+  const response = await fetch(getApiUrl(path, searchParams), options)
 
   if (!response.ok) {
     throw new Error(`WordPress request failed with status ${response.status}.`)

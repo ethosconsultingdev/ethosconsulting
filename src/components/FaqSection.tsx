@@ -48,10 +48,10 @@ export function FaqSection({ content }: { content?: HomePageContent['faq'] }) {
 
           {/* Right Column: Tagline, Title & Accordion */}
           <div className="lg:col-span-7">
-            <p className="text-xs font-bold uppercase tracking-wider text-[#138275] sm:text-sm">
+            <p className="text-xs font-bold uppercase tracking-wider text-[#157f4d] sm:text-sm">
               {faqContent.tagline}
             </p>
-            <h2 className="mt-2 text-2xl font-extrabold tracking-tight text-[#16282e] sm:text-3xl lg:text-4xl">
+            <h2 className="mt-2 text-2xl font-extrabold tracking-tight text-[#0a1b29] sm:text-3xl lg:text-4xl">
               {faqContent.title}
             </h2>
 
@@ -64,7 +64,7 @@ export function FaqSection({ content }: { content?: HomePageContent['faq'] }) {
                     key={item.id}
                     className={`rounded-xl border bg-white p-5 transition-colors ${
                       isOpen
-                        ? 'border-[#138275]/30 shadow-md'
+                        ? 'border-[#157f4d]/30 shadow-md'
                         : 'border-slate-200/90'
                     }`}
                   >
@@ -75,15 +75,15 @@ export function FaqSection({ content }: { content?: HomePageContent['faq'] }) {
                       aria-expanded={isOpen}
                     >
                       <span className="flex items-baseline gap-2.5">
-                        <span className="text-sm font-bold text-[#138275]">
+                        <span className="text-sm font-bold text-[#157f4d]">
                           {String(index + 1).padStart(2, '0')}.
                         </span>
-                        <span className="text-sm font-bold text-[#16282e] sm:text-base">
+                        <span className="text-sm font-bold text-[#0a1b29] sm:text-base">
                           {item.question}
                         </span>
                       </span>
                       <ChevronIcon
-                        className={`h-4 w-4 shrink-0 text-[#138275] transition-transform ${
+                        className={`h-4 w-4 shrink-0 text-[#157f4d] transition-transform ${
                           isOpen ? 'rotate-180' : ''
                         }`}
                       />
