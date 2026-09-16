@@ -1,4 +1,4 @@
-import { blogPosts, blogSection } from '#/content/copy'
+import { blogSection } from '#/content/copy'
 import type { HomePageContent, WordPressPost } from '#/server/wordpress.types'
 
 export function BlogSection({
@@ -8,12 +8,12 @@ export function BlogSection({
   posts?: WordPressPost[]
   content?: HomePageContent['blog']
 }) {
-  const visiblePosts = posts.length
-    ? posts.map((post) => ({
-        ...post,
-        href: `/artigos/${post.slug}`,
-      }))
-    : blogPosts
+  if (!posts.length) return null
+
+  const visiblePosts = posts.map((post) => ({
+    ...post,
+    href: `/artigos/${post.slug}`,
+  }))
 
   return (
     <section id="blog" className="bg-white py-16 sm:py-20 lg:py-24">
@@ -37,7 +37,7 @@ export function BlogSection({
                   {post.image ? (
                     <img
                       src={post.image}
-                      alt={'imageAlt' in post ? post.imageAlt : post.title}
+                      alt={post.imageAlt}
                       className="h-full w-full object-cover object-center transition-transform duration-300 hover:scale-[1.02]"
                     />
                   ) : (

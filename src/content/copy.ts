@@ -45,30 +45,6 @@ export const aboutSection = {
   secondaryCta: 'Ver a Nossa Metodologia',
 }
 
-export interface ImpactMetric {
-  id: 'growth' | 'satisfaction' | 'customers'
-  value: string
-  label: string
-}
-
-export const impactMetrics: ImpactMetric[] = [
-  {
-    id: 'growth',
-    value: '2.6x',
-    label: 'Crescimento médio',
-  },
-  {
-    id: 'satisfaction',
-    value: '88.6%',
-    label: 'Satisfação de clientes',
-  },
-  {
-    id: 'customers',
-    value: '3M+',
-    label: 'Clientes satisfeitos',
-  },
-]
-
 // Service taxonomy used by the contact form's "area of interest" picker
 // (see `ContactForm` and `inquiries.schema.ts`) — kept even though the
 // homepage no longer has a dedicated Services section.
@@ -285,28 +261,3 @@ export const blogSection = {
   tagline: 'Blog',
   title: 'Leia os Nossos Artigos',
 }
-
-export interface BlogPost {
-  date: string
-  author: string
-  title: string
-  image: string
-  href: string
-}
-
-export const blogPosts: BlogPost[] = [
-  {
-    date: '24 Fev, 2025',
-    author: 'Equipa Ethos',
-    title: 'Como uma auditoria de procurement reduz o risco de fornecedores',
-    image: '/blog-procurement-audit.jpg',
-    href: '#',
-  },
-  {
-    date: '26 Mar, 2025',
-    author: 'Equipa Ethos',
-    title: 'ESG na cadeia de abastecimento: da teoria à prática em Moçambique',
-    image: '/blog-esg-supply-chain.jpg',
-    href: '#',
-  },
-]

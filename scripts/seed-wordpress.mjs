@@ -199,15 +199,6 @@ const homepage = await request('pages/6', {
       about_secondary_cta_label: 'Ver a Nossa Metodologia',
       about_primary_image: media.aboutPrimary,
       about_secondary_image: media.aboutSecondary,
-      metrics: [
-        { key: 'growth', value: '2.6x', label: 'Crescimento médio' },
-        {
-          key: 'satisfaction',
-          value: '88.6%',
-          label: 'Satisfação de clientes',
-        },
-        { key: 'customers', value: '3M+', label: 'Clientes satisfeitos' },
-      ],
       methodology_tagline: 'A Nossa Metodologia',
       methodology_title: 'Um processo, não uma promessa',
       methodology_cta_label: 'Marcar Diagnóstico',

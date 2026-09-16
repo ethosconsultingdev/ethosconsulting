@@ -20,14 +20,24 @@ Make the ETHOS CONSULTING frontend easy for non-developers to manage through Wor
 
 ## Current State
 
-- The WordPress REST API is available at `/wp-json/wp/v2`.
-- WordPress Application Password authentication has been tested successfully.
-- WordPress currently contains only the default `Hello world` post and `Sample Page`.
-- Only Akismet and Hello Dolly are installed, and both are inactive.
-- The frontend already reads standard WordPress posts and provides `/artigos/$slug` article pages.
-- Homepage sections other than articles still use local content from `src/content/copy.ts`.
-- Contact submissions still use the local `.data/inquiries.jsonl` development store.
-- Nitro currently targets `node-server`, not Cloudflare Workers.
+- The production frontend is live on Cloudflare Workers at `https://ethosconsultingmz.co.mz`.
+- WordPress serves the homepage, contact page, services, methodology, FAQs, media, and articles through the public REST API.
+- CPT UI and SCF definitions are source-controlled under `wordpress/`, and `pnpm cms:seed` updates the approved baseline content idempotently.
+- The default `Hello world` post has been deleted. The article section stays hidden until a real article is published.
+- Unverified impact metrics have been removed from the frontend, fallback content, seed script, and source-controlled SCF schema.
+- Contact submissions use Turnstile and Resend, send a branded internal notification, and send a receipt to the visitor.
+- Production contact details are `+258 84 613 8863`, `contacto@ethosconsultingmz.co.mz`, and Av. Salvador Allende, n.º 84, Maputo 1100.
+- Local content remains only as a safe fallback when WordPress content is unavailable or invalid.
+
+## Delivery Status
+
+Phases 1-4 and 6-10 are implemented for published production content. The remaining post-launch work is intentionally bounded:
+
+- Add rate limiting for contact submissions in addition to Turnstile.
+- Add conservative caching for public WordPress reads.
+- Add authenticated draft preview with a dedicated least-privilege WordPress user.
+- Publish the first approved article; the website does not display placeholder articles.
+- Reintroduce an impact section only after ETHOS supplies verified, attributable figures.
 
 ## Phase 1: WordPress Foundation
 
@@ -148,16 +158,6 @@ The two headline fields remain separate because the design deliberately renders 
 - `about_secondary_image`: image object
 - `about_secondary_image_alt`: text
 
-### Metrics Tab
-
-- `metrics`: repeater
-- `metrics.key`: controlled choice
-- `metrics.value`: text
-- `metrics.label`: text
-- `metrics.icon`: controlled choice or image
-
-The initial layout supports three metrics. Values remain formatted strings because examples include `2.6x`, `88.6%`, and `3M+`.
-
 ### Section Settings Tab
 
 - `methodology_tagline`: text
@@ -257,7 +257,6 @@ Public published content requests must not include WordPress administrator crede
 Fixed layout constraints:
 
 - Exactly two hero headline lines
-- Three homepage metrics
 - Four methodology steps
 - Stable service slugs
 - Stable anchors: `sobre`, `metodologia`, `faq`, `blog`, and `marcar-consulta`
@@ -336,7 +335,7 @@ Inputs required for this phase:
 - Draft content is not exposed publicly.
 - Resend sends valid inquiries to the configured recipient.
 - Invalid and spam submissions are rejected.
-- Cloudflare preview works on desktop and mobile.
+- Cloudflare production deployment works on desktop and mobile.
 - `pnpm lint` passes.
 - `pnpm exec tsc --noEmit` passes.
 - `pnpm build` passes.

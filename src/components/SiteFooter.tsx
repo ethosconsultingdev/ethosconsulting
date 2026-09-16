@@ -37,14 +37,15 @@ export function SiteFooter() {
 
         {/* Footer bar: wordmark */}
         <div className="mt-12 rounded-2xl border border-slate-200/70 bg-white px-6 py-6 shadow-sm sm:px-8">
-          <div className="flex items-center gap-2 font-bold tracking-tight text-slate-900">
-            <span className="text-lg font-extrabold tracking-tight text-slate-900">
-              ETHOS
-            </span>
-            <span className="text-xs font-semibold uppercase tracking-widest text-[#138275]">
-              Consulting
-            </span>
-          </div>
+          <a href="/" aria-label="ETHOS Consulting — Início">
+            <img
+              src="/logo.png"
+              alt="ETHOS Consulting"
+              width={168}
+              height={56}
+              className="h-12 w-auto sm:h-14"
+            />
+          </a>
 
           {/* Copyright bar */}
           <div className="mt-6 flex flex-col gap-3 border-t border-slate-100 pt-5 text-xs text-slate-500 sm:flex-row sm:items-center sm:justify-between">

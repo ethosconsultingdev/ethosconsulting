@@ -18,14 +18,16 @@ export function SiteHeader() {
         <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3.5 sm:px-6">
           <Link
             to="/"
-            className="flex items-center gap-2 font-bold tracking-tight text-slate-900"
+            aria-label="ETHOS Consulting — Início"
+            className="shrink-0"
           >
-            <span className="text-xl font-extrabold tracking-tight text-slate-900">
-              ETHOS
-            </span>
-            <span className="text-xs font-semibold uppercase tracking-widest text-[#138275]">
-              Consulting
-            </span>
+            <img
+              src="/logo.png"
+              alt="ETHOS Consulting"
+              width={150}
+              height={50}
+              className="h-10 w-auto sm:h-12"
+            />
           </Link>
 
           {/* Desktop nav links */}

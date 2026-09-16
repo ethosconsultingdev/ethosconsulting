@@ -16,12 +16,6 @@ export interface CmsImage {
   alt: string
 }
 
-export interface CmsMetric {
-  id: 'growth' | 'satisfaction' | 'customers'
-  value: string
-  label: string
-}
-
 export interface CmsMethodologyStep {
   id: string
   step: number
@@ -66,7 +60,6 @@ export interface HomePageContent {
     primaryImage: CmsImage
     secondaryImage: CmsImage
   }
-  metrics: CmsMetric[]
   methodology: {
     tagline: string
     title: string

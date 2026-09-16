@@ -61,15 +61,6 @@ const homepageFieldsSchema = z.object({
   about_secondary_cta_label: z.string().min(1),
   about_primary_image: imageSchema,
   about_secondary_image: imageSchema,
-  metrics: z
-    .array(
-      z.object({
-        key: z.enum(['growth', 'satisfaction', 'customers']),
-        value: z.string().min(1),
-        label: z.string().min(1),
-      }),
-    )
-    .length(3),
   methodology_tagline: z.string().min(1),
   methodology_title: z.string().min(1),
   methodology_cta_label: z.string().min(1),
@@ -291,11 +282,6 @@ export async function fetchHomePageContent(): Promise<HomePageContent | null> {
       primaryImage: value.about_primary_image,
       secondaryImage: value.about_secondary_image,
     },
-    metrics: value.metrics.map((metric) => ({
-      id: metric.key,
-      value: metric.value,
-      label: metric.label,
-    })),
     methodology: {
       tagline: value.methodology_tagline,
       title: value.methodology_title,
