@@ -40,7 +40,7 @@ export const aboutSection = {
     'Critérios ESG reais, não apenas em relatórios.',
   ],
   contactPrompt: 'Tem alguma dúvida ou desafio específico?',
-  phone: '+258 84 000 0000',
+  phone: '+258 84 613 8863',
   primaryCtaSub: 'Marcar Diagnóstico',
   secondaryCta: 'Ver a Nossa Metodologia',
 }
@@ -232,7 +232,7 @@ export const finalCta = {
 export const siteInfo = {
   name: 'ETHOS CONSULTING',
   tagline: 'Procurement · Supply Chain · Auditoria de Procurement · ESG',
-  location: 'Maputo, Moçambique',
+  location: 'Av. Salvador Allende, n.º 84, Maputo 1100, Moçambique',
   description:
     'Consultoria especializada em Procurement, Supply Chain, Auditoria de Procurement e ESG em Moçambique.',
 }
@@ -240,28 +240,38 @@ export const siteInfo = {
 export interface FooterLocation {
   label: string
   name: string
-  lines: string[]
+  lines: Array<{ text: string; href?: string }>
 }
 
 // Three honest cards reflecting where ETHOS actually operates (per the
 // FAQ: Maputo office, nationwide, and remote SADC support) — not
-// fabricated offices. Maputo's contact details are placeholders; confirm
-// the real address/e-mail before this goes live.
+// fabricated offices.
 export const officeLocations: FooterLocation[] = [
   {
     label: 'Localização 01',
     name: 'Escritório de Maputo',
-    lines: ['Maputo, Moçambique', '[e-mail a confirmar]', '+258 84 000 0000'],
+    lines: [
+      {
+        text: 'Av. Salvador Allende, n.º 84',
+        href: 'https://www.google.com/maps/search/?api=1&query=84%20Av.%20Salvador%20Allende%2C%20Maputo%201100%2C%20Mozambique',
+      },
+      { text: 'Maputo 1100, Moçambique' },
+      {
+        text: 'contacto@ethosconsultingmz.co.mz',
+        href: 'mailto:contacto@ethosconsultingmz.co.mz',
+      },
+      { text: '+258 84 613 8863', href: 'tel:+258846138863' },
+    ],
   },
   {
     label: 'Localização 02',
     name: 'Cobertura Nacional',
-    lines: ['Atendemos organizações em todo Moçambique.'],
+    lines: [{ text: 'Atendemos organizações em todo Moçambique.' }],
   },
   {
     label: 'Localização 03',
     name: 'Região SADC',
-    lines: ['Apoio remoto a organizações na região da SADC.'],
+    lines: [{ text: 'Apoio remoto a organizações na região da SADC.' }],
   },
 ]
 

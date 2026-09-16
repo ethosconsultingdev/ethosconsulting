@@ -194,7 +194,7 @@ const homepage = await request('pages/6', {
         { text: 'Critérios ESG reais, não apenas em relatórios.' },
       ],
       about_contact_prompt: 'Tem alguma dúvida ou desafio específico?',
-      about_phone: '+258 84 000 0000',
+      about_phone: '+258 84 613 8863',
       about_primary_cta_label: 'Marcar Diagnóstico',
       about_secondary_cta_label: 'Ver a Nossa Metodologia',
       about_primary_image: media.aboutPrimary,

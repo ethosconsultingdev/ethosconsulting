@@ -18,8 +18,17 @@ export function SiteFooter() {
               </h3>
               <div className="mt-3 w-12 border-t border-slate-300" />
               {location.lines.map((line) => (
-                <p key={line} className="mt-2 text-sm text-slate-500">
-                  {line}
+                <p key={line.text} className="mt-2 text-sm text-slate-500">
+                  {line.href ? (
+                    <a
+                      href={line.href}
+                      className="transition-colors hover:text-[#138275] hover:underline"
+                    >
+                      {line.text}
+                    </a>
+                  ) : (
+                    line.text
+                  )}
                 </p>
               ))}
             </div>
